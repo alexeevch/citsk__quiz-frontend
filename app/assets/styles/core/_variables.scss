@@ -1,0 +1,34 @@
+@use "sass:math";
+@use "../functions/px-to-rem" as *;
+@use "../mixins/breakpoints" as media;
+
+:root {
+  --font-family-primary: 'Golos Text';
+
+  --color-white: #FFFFFF;
+  --color-black: #000000;
+  --color-red: #FF0000;
+  --color-dark: #6F6F6F;
+  --color-gray: #F5F5F5;
+
+  --container-width: #{pxToRem(1440)};
+  --container-padding-x: #{pxToRem(60)};
+  --transition-duration: 0.2s;
+
+  @include media.screensFrom("xl") {
+    --container-width: #{pxToRem(1280)};
+    --container-padding-x: #{pxToRem(20)};
+  }
+
+  @include media.screensFrom("lg") {
+    --container-width: #{pxToRem(1024)};
+  }
+
+  @include media.screensFrom("md") {
+    --container-width: #{pxToRem(768)};
+  }
+
+  @include media.screensFrom("sm") {
+    --container-width: #{pxToRem(480)};
+  }
+}

@@ -3,12 +3,24 @@ export default defineNuxtConfig({
 
   devtools: { enabled: true },
 
-  modules: ["@nuxt/eslint"],
+  modules: ["@nuxt/eslint", "@primevue/nuxt-module"],
 
   runtimeConfig: {
     public: {
       appName: "",
       apiUrl: ""
+    }
+  },
+
+  css: ["~/assets/styles/main.scss"],
+
+  primevue: {
+    importTheme: { from: "~/assets/themes/citsk-preset.ts" },
+    components: {
+      include: ["Button"]
+    },
+    options: {
+      ripple: false
     }
   },
 

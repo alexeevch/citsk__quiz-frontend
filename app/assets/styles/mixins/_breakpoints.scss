@@ -1,0 +1,31 @@
+@use "sass:math";
+@use "sass:map";
+@use "../functions/px-to-rem" as *;
+
+$breakpoints: (
+        sm: pxToRem(480.98),
+        md: pxToRem(767.98),
+        lg: pxToRem(1023.98),
+        xl: pxToRem(1200.98),
+);
+
+@mixin screensFrom($breakpoint) {
+  @if map.has-key($breakpoints, $breakpoint) {
+    $max-width-value: map.get($breakpoints, $breakpoint);
+    @media (max-width: $max-width-value) {
+      @content;
+    }
+  } @else {
+    @warn "Breakpoint `#{$breakpoint}` was not found in the map `$breakpoints`";
+  }
+}
+
+@mixin screensTo($breakpoint) {
+  @if map.has-key($breakpoints, $breakpoint) {
+    @media (min-width: map.get($breakpoints, $breakpoint)) {
+      @content;
+    }
+  } @else {
+    @warn "Breakpoint `#{$breakpoint}` was not found in the map `$breakpoints`";
+  }
+}

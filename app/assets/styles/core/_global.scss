@@ -1,0 +1,33 @@
+@use "../mixins/fluid-text" as *;
+@use "../mixins/breakpoints" as *;
+@use "../functions/px-to-rem" as *;
+
+body {
+  font-family: var(--font-family-primary), sans-serif;
+  background-color: var(--color-white);
+  color: var(--color-black);
+  position: relative;
+  overflow-x: hidden;
+
+  @include fluid-text(14, 12);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.container {
+  max-width: var(--container-width);
+  padding: 0 var(--container-padding-x) 0 var(--container-padding-x);
+  width: 100%;
+  margin: 0 auto;
+}
+
+.page-heading {
+  padding: pxToRem(100) 0 pxToRem(110) 0;
+
+  @include screensFrom("lg") {
+    padding: pxToRem(20) 0 pxToRem(40) 0;
+  }
+}
