@@ -3,7 +3,7 @@ export default defineNuxtConfig({
 
   devtools: { enabled: true },
 
-  modules: ["@nuxt/eslint", "@primevue/nuxt-module"],
+  modules: ["@nuxt/eslint", "@primevue/nuxt-module", "@pinia/nuxt"],
 
   runtimeConfig: {
     public: {
