@@ -1,8 +1,12 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const layout = useLayoutSettings();
+</script>
 
 <template>
   <div class="app-layout">
-    <header>header</header>
+    <header>
+      <Button @click="layout.toggleDarkMode()">toggle</Button>
+    </header>
     <main class="main">
       <NuxtPage />
     </main>
