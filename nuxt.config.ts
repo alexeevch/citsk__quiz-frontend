@@ -24,5 +24,22 @@ export default defineNuxtConfig({
     }
   },
 
-  ssr: false
+  ssr: false,
+
+  vite: {
+    optimizeDeps: {
+      include: ["@vue/devtools-core", "@vue/devtools-kit"]
+    }
+  },
+
+  app: {
+    head: {
+      script: [
+        {
+          innerHTML: `(function(){try{var s=JSON.parse(localStorage.getItem('layout:settings')||'{}');if(s.isDarkMode)document.documentElement.classList.add('dark')}catch(e){}})()`,
+          tagPosition: "head"
+        }
+      ]
+    }
+  }
 });
