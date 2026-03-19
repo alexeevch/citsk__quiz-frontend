@@ -13,3 +13,12 @@ a {
   color: inherit;
   text-decoration: none;
 }
+
+.card {
+  background: var(--p-card-background);
+  color: var(--color-text-primary);
+  box-shadow: var(--p-card-shadow);
+  border-radius: var(--p-card-border-radius);
+  display: flex;
+  flex-direction: column;
+}

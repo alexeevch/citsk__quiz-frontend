@@ -3,6 +3,21 @@
 @use "../mixins/breakpoints" as media;
 
 :root {
-  --color-bg-primary: var(--p-surface-ground);
   --font-family-base: 'Golos Text';
+  --color-primary: var(--p-primary-color);
+
+  --color-text-primary: var(--p-surface-1000);
+  --color-text-active: var(--p-surface-800);
+
+  --color-bg-primary: var(--p-surface-ground);
+  --color-bg-active: var(--p-surface-100);
+  --color-bg-hover: var(--p-surface-200);
+
+  --color-bg-card: var(--p-card-background);
+
+  --shadow-card: var(--p-card-shadow);
+
+  --padding-card: 2rem;
+
+  --border-radius-primary: var(--p-card-border-radius);
 }
