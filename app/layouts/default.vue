@@ -64,7 +64,7 @@ const { menu } = useAppConfig();
   &__sidebar {
     position: fixed;
     top: var(--sidebar-top-offset);
-    left: 2rem;
+    left: var(--padding-card-md);
     width: var(--sidebar-width);
     height: calc(100dvh - 8rem);
     display: flex;
@@ -91,15 +91,23 @@ const { menu } = useAppConfig();
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: var(--sidebar-top-offset) 2rem 0;
+    padding: var(--sidebar-top-offset) var(--padding-card-md) 0;
     transition: left var(--transition-duration) ease;
+
+    @include mixins.screensFrom("sm") {
+      padding: var(--sidebar-top-offset) 0 0;
+    }
   }
 
   &__main {
     flex: 1 1 auto;
-    padding: 2rem;
+    padding: var(--padding-card-md);
     background-color: var(--color-bg-card);
     border-radius: var(--border-radius-primary);
+
+    @include mixins.screensFrom("sm") {
+      padding: var(--padding-card-sm);
+    }
   }
 
   &__sidebar-backdrop {
@@ -110,7 +118,7 @@ const { menu } = useAppConfig();
   }
 
   &--visible &__main-container {
-    left: calc(var(--sidebar-width) + 2rem);
+    left: calc(var(--sidebar-width) + var(--padding-card-md));
 
     @include mixins.screensFrom("md") {
       left: 0;

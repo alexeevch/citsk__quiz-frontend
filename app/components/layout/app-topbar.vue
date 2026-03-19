@@ -42,6 +42,7 @@ const layout = useLayout();
 
 <style lang="scss" scoped>
 @use "~/assets/styles/common/functions" as *;
+@use "~/assets/styles/common/mixins" as mixins;
 
 .topbar {
   width: 100%;
@@ -49,7 +50,11 @@ const layout = useLayout();
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 var(--padding-card);
+  padding: 0 var(--padding-card-md);
+
+  @include mixins.screensFrom("sm") {
+    padding: 0 var(--padding-card-sm);
+  }
 
   &__left,
   &_right {

@@ -17,7 +17,9 @@
 
   --shadow-card: var(--p-card-shadow);
 
-  --padding-card: 2rem;
+  --padding-card-sm: 1rem;
+  --padding-card-md: 2rem;
+  --padding-card-lg: 3rem;
 
   --border-radius-primary: var(--p-card-border-radius);
 }

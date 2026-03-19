@@ -84,6 +84,7 @@ function onLeave(el: Element) {
 
 <style lang="scss" scoped>
 @use "~/assets/styles/common/functions" as *;
+@use "~/assets/styles/common/mixins" as mixins;
 
 .menu-item {
   list-style: none;
@@ -108,7 +109,7 @@ function onLeave(el: Element) {
     overflow: hidden;
     border-radius: var(--border-radius-primary);
 
-    &:hover {
+    @include mixins.hover() {
       background-color: var(--color-bg-hover);
     }
 
@@ -122,7 +123,8 @@ function onLeave(el: Element) {
 
     &--plain {
       cursor: default;
-      &:hover {
+
+      @include mixins.hover() {
         background: transparent;
         color: var(--text-color);
       }
