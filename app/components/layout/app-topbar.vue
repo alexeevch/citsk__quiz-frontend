@@ -51,6 +51,7 @@ const layout = useLayout();
   align-items: center;
   justify-content: space-between;
   padding: 0 var(--padding-card-md);
+  background-color: var(--color-bg-primary);
 
   @include mixins.screensFrom("sm") {
     padding: 0 var(--padding-card-sm);
