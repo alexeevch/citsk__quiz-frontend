@@ -1,4 +1,5 @@
 @use "../mixins" as mixins;
+@use "../functions" as functions;
 
 h1, h2, h3, h4, h5, h6 {
   margin: 0;
@@ -6,5 +7,6 @@ h1, h2, h3, h4, h5, h6 {
 
 h1, .h1 {
   font-weight: 500;
+  margin-bottom: functions.fluid(28, 22);
   @include mixins.fluid-text(24, 18);
 }
