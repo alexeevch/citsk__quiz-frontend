@@ -45,6 +45,7 @@ const { menu } = useAppConfig();
   --topbar-height: 4rem;
   --sidebar-top-offset: 4rem;
   --transition-duration: 0.2s;
+  --layout-padding: 1rem;
 
   display: flex;
   flex-direction: column;
@@ -64,9 +65,9 @@ const { menu } = useAppConfig();
   &__sidebar {
     position: fixed;
     top: var(--sidebar-top-offset);
-    left: var(--padding-card-md);
+    left: var(--layout-padding);
     width: var(--sidebar-width);
-    height: calc(100dvh - 8rem);
+    height: calc(100dvh - (var(--layout-padding) + var(--topbar-height)));
     display: flex;
     flex-direction: column;
     overflow-y: auto;
@@ -79,27 +80,30 @@ const { menu } = useAppConfig();
       height: 100dvh;
       padding: 1rem;
       background-color: var(--color-bg-card);
+      border-radius: 0 var(--border-radius-primary) var(--border-radius-primary) 0;
     }
   }
 
   &__main-container {
     position: fixed;
+    height: calc(100dvh - var(--layout-padding));
     top: 0;
     left: 0;
     right: 0;
-    min-height: 100dvh;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: var(--sidebar-top-offset) var(--padding-card-md) 0;
+    padding: var(--sidebar-top-offset) var(--layout-padding) 0;
     transition: left var(--transition-duration) ease;
 
     @include mixins.screensFrom("sm") {
       padding: var(--sidebar-top-offset) 0 0;
+      height: 100dvh;
     }
   }
 
   &__main {
+    overflow-y: auto;
     flex: 1 1 auto;
     padding: var(--padding-card-md);
     background-color: var(--color-bg-card);
@@ -107,6 +111,7 @@ const { menu } = useAppConfig();
 
     @include mixins.screensFrom("sm") {
       padding: var(--padding-card-sm);
+      border-radius: var(--border-radius-primary) var(--border-radius-primary) 0 0;
     }
   }
 
@@ -118,7 +123,7 @@ const { menu } = useAppConfig();
   }
 
   &--visible &__main-container {
-    left: calc(var(--sidebar-width) + var(--padding-card-md));
+    left: calc(var(--sidebar-width) + var(--layout-padding));
 
     @include mixins.screensFrom("md") {
       left: 0;
