@@ -3,7 +3,7 @@ export default defineNuxtConfig({
 
   devtools: { enabled: true },
 
-  modules: ["@nuxt/eslint", "@primevue/nuxt-module", "@pinia/nuxt"],
+  modules: ["@nuxt/eslint", "@primevue/nuxt-module", "@pinia/nuxt", "@nuxt/image"],
 
   runtimeConfig: {
     public: {
@@ -17,7 +17,7 @@ export default defineNuxtConfig({
   primevue: {
     importTheme: { from: "~/assets/themes/citsk-preset.ts" },
     components: {
-      include: ["Button", "Card"]
+      include: ["Button", "Card", "Form", "Input"]
     },
     options: {
       ripple: false
