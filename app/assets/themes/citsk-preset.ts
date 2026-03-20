@@ -3,6 +3,7 @@ import Aura from "@primeuix/themes/aura";
 
 const AppPreset = definePreset(Aura, {
   semantic: {
+    fontSize: "0.875rem",
     primary: {
       0: "#FFFFFF",
       50: "#EFF4FF",
@@ -48,15 +49,33 @@ const AppPreset = definePreset(Aura, {
           focusBackground: "{primary.700}",
           color: "#ffffff",
           focusColor: "#ffffff"
+        },
+        formField: {
+          background: "{surface.0}",
+          disabledBackground: "{surface.200}",
+          filledBackground: "{surface.100}",
+          filledFocusBackground: "{surface.100}",
+          borderColor: "{surface.300}",
+          hoverBorderColor: "{surface.400}",
+          focusBorderColor: "{primary.600}",
+          invalidBorderColor: "{red.600}",
+          color: "{surface.800}",
+          disabledColor: "{surface.400}",
+          placeholderColor: "{surface.400}",
+          floatLabelColor: "{surface.400}",
+          floatLabelFocusColor: "{primary.600}",
+          floatLabelActiveColor: "{surface.500}",
+          iconColor: "{surface.400}",
+          shadow: "none"
         }
       },
 
       dark: {
         primary: {
-          color: "{primary.400}",
+          color: "{primary.500}",
           contrastColor: "#ffffff",
-          hoverColor: "{primary.300}",
-          activeColor: "{primary.200}"
+          hoverColor: "{primary.400}",
+          activeColor: "{primary.600}"
         },
         surface: {
           ground: "#0F172A",
@@ -79,6 +98,24 @@ const AppPreset = definePreset(Aura, {
           focusBackground: "color-mix(in srgb, {primary.400}, transparent 76%)",
           color: "{primary.200}",
           focusColor: "{primary.100}"
+        },
+        formField: {
+          background: "{surface.200}",
+          disabledBackground: "{surface.500}",
+          filledBackground: "{surface.200}",
+          filledFocusBackground: "{surface.200}",
+          borderColor: "{surface.300}",
+          hoverBorderColor: "{surface.400}",
+          focusBorderColor: "{primary.500}",
+          invalidBorderColor: "{red.400}",
+          color: "{surface.800}",
+          disabledColor: "{surface.300}",
+          placeholderColor: "{surface.400}",
+          floatLabelColor: "{surface.400}",
+          floatLabelFocusColor: "{primary.400}",
+          floatLabelActiveColor: "{surface.500}",
+          iconColor: "{surface.400}",
+          shadow: "none"
         }
       }
     }
