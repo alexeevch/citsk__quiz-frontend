@@ -5,8 +5,7 @@
 body {
   font-family: var(--font-family-base), sans-serif;
   background-color: var(--color-bg-primary);
-
-  @include fluid-text(14, 12);
+  font-size: pxToRem(14);
 }
 
 a {
@@ -21,4 +20,15 @@ a {
   border-radius: var(--p-card-border-radius);
   display: flex;
   flex-direction: column;
+}
+
+.p-inputtext,
+.p-textarea,
+.p-select-label,
+.p-multiselect-label,
+.p-password input,
+.p-datepicker-input,
+.p-inputnumber-input,
+.p-button {
+  font-size: pxToRem(14) !important;
 }
