@@ -13,7 +13,6 @@
   --color-bg-primary: var(--p-surface-ground);
   --color-bg-active: var(--p-surface-100);
   --color-bg-hover: var(--p-surface-200);
-
   --color-bg-card: var(--p-card-background);
 
   --shadow-card: var(--p-card-shadow);
@@ -21,6 +20,8 @@
   --padding-card-sm: 1rem;
   --padding-card-md: 2rem;
   --padding-card-lg: 3rem;
+  --padding-layout-sm: 0;
+  --padding-layout-md: 1rem;
 
   --border-radius-primary: var(--p-card-border-radius);
 }

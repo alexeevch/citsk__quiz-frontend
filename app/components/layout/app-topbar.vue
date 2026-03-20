@@ -41,7 +41,6 @@ const layout = useLayout();
 </template>
 
 <style lang="scss" scoped>
-@use "~/assets/styles/common/functions" as *;
 @use "~/assets/styles/common/mixins" as mixins;
 
 .topbar {

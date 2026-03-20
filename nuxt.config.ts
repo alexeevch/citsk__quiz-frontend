@@ -1,7 +1,7 @@
 export default defineNuxtConfig({
   compatibilityDate: "2025-07-15",
-
   devtools: { enabled: true },
+  ssr: false,
 
   modules: ["@nuxt/eslint", "@primevue/nuxt-module", "@pinia/nuxt", "@nuxt/image"],
 
@@ -24,11 +24,13 @@ export default defineNuxtConfig({
     }
   },
 
-  ssr: false,
-
   vite: {
-    optimizeDeps: {
-      include: ["@vue/devtools-core", "@vue/devtools-kit"]
+    css: {
+      preprocessorOptions: {
+        scss: {
+          additionalData: '@use "~/assets/styles/common/_functions.scss" as *;'
+        }
+      }
     }
   },
 

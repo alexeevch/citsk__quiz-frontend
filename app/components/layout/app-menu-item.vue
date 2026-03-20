@@ -83,7 +83,6 @@ function onLeave(el: Element) {
 </template>
 
 <style lang="scss" scoped>
-@use "~/assets/styles/common/functions" as *;
 @use "~/assets/styles/common/mixins" as mixins;
 
 .menu-item {
@@ -99,7 +98,7 @@ function onLeave(el: Element) {
     background: transparent;
     cursor: pointer;
     color: var(--color-text-primary);
-    font-size: 0.9rem;
+    font-size: pxToRem(14);
     font-weight: 400;
     text-decoration: none;
     transition:
@@ -115,6 +114,7 @@ function onLeave(el: Element) {
 
     &.router-link-active {
       color: var(--color-primary);
+      font-weight: 500;
     }
 
     &--toggle {
