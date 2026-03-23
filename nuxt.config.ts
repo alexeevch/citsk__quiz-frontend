@@ -17,7 +17,7 @@ export default defineNuxtConfig({
   primevue: {
     importTheme: { from: "~/assets/themes/citsk-preset.ts" },
     components: {
-      include: ["Button", "Card", "Form", "Input"]
+      include: ["Button", "Card", "Form", "Input", "Toast"]
     },
     options: {
       ripple: false

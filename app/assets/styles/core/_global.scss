@@ -33,3 +33,13 @@ a {
 .p-button {
   font-size: pxToRem(14) !important;
 }
+
+.p-toast {
+  @include screensFrom("md") {
+    width: calc(100vw - 2rem) !important;
+    max-width: 420px;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    top: 1rem !important;
+  }
+}
