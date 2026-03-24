@@ -1,7 +1,8 @@
 <script setup lang="ts">
 const appName = useRuntimeConfig().public.appName;
 definePageMeta({
-  layout: "auth"
+  layout: "auth",
+  guestOnly: true
 });
 </script>
 
@@ -16,15 +17,7 @@ definePageMeta({
         <p class="sign-in__app-name">{{ appName }}</p>
       </div>
     </div>
-    <Form v-slot="$form" class="sign-in__form" :initialValues :resolver @submit="onFormSubmit">
-      <div class="sign-in__form-field">
-        <InputText name="login" type="text" placeholder="Email" fluid />
-      </div>
-      <div class="sign-in__form-field">
-        <Password name="password" placeholder="Password" :feedback="false" fluid toggle-mask />
-      </div>
-      <Button icon="pi pi-sign-in" label="Войти" />
-    </Form>
+    <AuthLoginForm />
   </div>
 </template>
 
@@ -47,14 +40,8 @@ definePageMeta({
     text-align: center;
   }
 
-  &__form {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: var(--padding-card-sm);
-    padding: var(--padding-card-sm);
-    border-radius: var(--border-radius-primary);
-    background-color: var(--color-bg-card);
+  &__label {
+    margin: 0;
   }
 }
 </style>
