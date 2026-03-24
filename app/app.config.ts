@@ -1,5 +1,3 @@
-import { Permissions } from "~/types/api/auth/persmissions";
-
 export default defineAppConfig({
   menu: {
     sidebarMenu: [
@@ -21,21 +19,18 @@ export default defineAppConfig({
             key: "quiz",
             label: "Викторины",
             icon: "pi pi-list-check",
-            permission: Permissions.Quiz.View,
             children: [
               {
                 key: "quiz-list",
                 label: "Список викторин",
                 icon: "pi pi-list",
-                to: "/quiz",
-                permission: Permissions.Quiz.View
+                to: "/quiz"
               },
               {
                 key: "quiz-create",
                 label: "Создать викторину",
                 icon: "pi pi-plus",
-                to: "/quiz/create",
-                permission: Permissions.Quiz.Add
+                to: "/quiz/create"
               }
             ]
           },
@@ -43,21 +38,18 @@ export default defineAppConfig({
             key: "question",
             label: "Вопросы",
             icon: "pi pi-question-circle",
-            permission: Permissions.Question.View,
             children: [
               {
                 key: "question-list",
                 label: "Список вопросов",
                 icon: "pi pi-list",
-                to: "/questions",
-                permission: Permissions.Question.View
+                to: "/questions"
               },
               {
                 key: "question-create",
                 label: "Создать вопрос",
                 icon: "pi pi-plus",
-                to: "/questions/create",
-                permission: Permissions.Question.Add
+                to: "/questions/create"
               }
             ]
           },
@@ -65,21 +57,18 @@ export default defineAppConfig({
             key: "answer",
             label: "Ответы",
             icon: "pi pi-check-circle",
-            permission: Permissions.Answer.View,
             children: [
               {
                 key: "answer-list",
                 label: "Список ответов",
                 icon: "pi pi-list",
-                to: "/answers",
-                permission: Permissions.Answer.View
+                to: "/answers"
               },
               {
                 key: "answer-create",
                 label: "Создать ответ",
                 icon: "pi pi-plus",
-                to: "/answers/create",
-                permission: Permissions.Answer.Add
+                to: "/answers/create"
               }
             ]
           }
@@ -92,14 +81,12 @@ export default defineAppConfig({
             key: "userresult",
             label: "Результаты викторин",
             icon: "pi pi-chart-bar",
-            permission: Permissions.UserResult.View,
             children: [
               {
                 key: "userresult-list",
                 label: "Все результаты",
                 icon: "pi pi-list",
-                to: "/results",
-                permission: Permissions.UserResult.View
+                to: "/results"
               }
             ]
           },
@@ -107,14 +94,12 @@ export default defineAppConfig({
             key: "useranswer",
             label: "Ответы пользователей",
             icon: "pi pi-comments",
-            permission: Permissions.UserAnswer.View,
             children: [
               {
                 key: "useranswer-list",
                 label: "Все ответы",
                 icon: "pi pi-list",
-                to: "/user-answers",
-                permission: Permissions.UserAnswer.View
+                to: "/user-answers"
               }
             ]
           }
@@ -127,21 +112,18 @@ export default defineAppConfig({
             key: "customuser",
             label: "Пользователи",
             icon: "pi pi-users",
-            permission: Permissions.CustomUser.View,
             children: [
               {
                 key: "customuser-list",
                 label: "Список пользователей",
                 icon: "pi pi-list",
-                to: "/users",
-                permission: Permissions.CustomUser.View
+                to: "/users"
               },
               {
                 key: "customuser-create",
                 label: "Создать пользователя",
                 icon: "pi pi-user-plus",
-                to: "/users/create",
-                permission: Permissions.CustomUser.Add
+                to: "/users/create"
               }
             ]
           },
@@ -149,21 +131,18 @@ export default defineAppConfig({
             key: "organization",
             label: "Организации",
             icon: "pi pi-building",
-            permission: Permissions.Organization.View,
             children: [
               {
                 key: "organization-list",
                 label: "Список организаций",
                 icon: "pi pi-list",
-                to: "/organizations",
-                permission: Permissions.Organization.View
+                to: "/organizations"
               },
               {
                 key: "organization-create",
                 label: "Создать организацию",
                 icon: "pi pi-plus",
-                to: "/organizations/create",
-                permission: Permissions.Organization.Add
+                to: "/organizations/create"
               }
             ]
           }
