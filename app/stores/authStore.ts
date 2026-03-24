@@ -1,87 +1,35 @@
 import { defineStore } from "pinia";
 import { useStoreRequest } from "~/composables/useStoreRequest";
-import { FetchError } from "ofetch";
 import type {
   AuthLoginDTO,
   AuthLoginResponseDTO,
-  AuthRefreshResponseDTO,
+  AuthPermissionCode,
   AuthUserData
-} from "~/types/api/auth/Auth";
-import type { AuthPermissionCode } from "~/types/api/auth/AuthPermission";
+} from "~/types/api/Auth";
 
 export const useAuthStore = defineStore("auth", () => {
-  const { $apiFetcher } = useNuxtApp();
+  const { $repositories } = useNuxtApp();
   const { error, isLoading, load } = useStoreRequest();
-
   const user = ref<AuthUserData | null>(null);
-  const accessToken = ref<string | null>(null);
 
   const isRefreshing = ref(false);
-  const refreshPromise = ref<Promise<string> | null>(null);
+  const refreshPromise = ref<Promise<void> | null>(null);
   const isInitialized = ref(false);
   const initPromise = ref<Promise<void> | null>(null);
 
   const isAuthenticated = computed(() => {
-    return !!accessToken.value;
+    return !!user.value;
   });
-  const userPermissions = computed(() => {
-    return user.value?.permissions || [];
-  });
-
-  function setAuth(data: { user: AuthUserData; accessToken: string }) {
-    user.value = data.user;
-    accessToken.value = data.accessToken;
-  }
-
-  function clearAuth() {
-    user.value = null;
-    accessToken.value = null;
-    isRefreshing.value = false;
-    refreshPromise.value = null;
-  }
-
-  async function refreshAccessToken(): Promise<string> {
-    if (isRefreshing.value && refreshPromise.value) {
-      return refreshPromise.value;
-    }
-
-    isRefreshing.value = true;
-
-    refreshPromise.value = (async () => {
-      try {
-        const tokens = await load<AuthRefreshResponseDTO>(() =>
-          $apiFetcher<AuthRefreshResponseDTO>("/v1/auth/refresh/", {
-            method: "POST"
-          })
-        );
-
-        const user = await fetchUser();
-
-        setAuth({
-          user,
-          accessToken: tokens.access
-        });
-
-        return tokens.access;
-      } catch (error) {
-        clearAuth();
-        throw error;
-      } finally {
-        isRefreshing.value = false;
-        refreshPromise.value = null;
-      }
-    })();
-
-    return refreshPromise.value;
-  }
+  const permissionSet = computed(
+    () => new Set(user.value?.permissions.map((p) => p.codename) ?? [])
+  );
 
   async function fetchUser() {
     try {
-      return await load<AuthUserData>(() =>
-        $apiFetcher<AuthUserData>("/v1/auth/me/", {
-          method: "GET"
-        })
-      );
+      const response = await load<AuthUserData>(() => $repositories.auth.getUser());
+      user.value = response;
+
+      return response;
     } catch (error) {
       clearAuth();
       throw error;
@@ -90,29 +38,19 @@ export const useAuthStore = defineStore("auth", () => {
 
   async function login(credentials: AuthLoginDTO) {
     try {
-      const tokens = await load<AuthLoginResponseDTO>(() =>
-        $apiFetcher<AuthLoginResponseDTO>("/v1/auth/refresh/", {
-          method: "POST",
-          body: credentials
-        })
+      const response = await load<AuthLoginResponseDTO>(() =>
+        $repositories.auth.login(credentials)
       );
-      const user = await fetchUser();
 
-      const authData = {
-        user,
-        accessToken: tokens.access
-      };
-
-      setAuth(authData);
-
-      return authData;
+      user.value = response.user;
+      return response.user;
     } catch (e) {
-      if (!(e instanceof FetchError)) {
+      if (!(e instanceof AppApiError)) {
         error.value = "Неизвестная ошибка, попробуйте позже";
         throw e;
       }
 
-      if (e.statusCode === 401) {
+      if (e.statusCode === 400) {
         error.value = "Неверные учетные данные";
       }
       throw e;
@@ -120,8 +58,14 @@ export const useAuthStore = defineStore("auth", () => {
   }
 
   async function logout() {
-    // TODO: make server query
+    await load(() => $repositories.auth.logout());
     clearAuth();
+  }
+
+  function clearAuth() {
+    user.value = null;
+    isRefreshing.value = false;
+    refreshPromise.value = null;
   }
 
   async function initAuth() {
@@ -130,18 +74,7 @@ export const useAuthStore = defineStore("auth", () => {
 
     initPromise.value = (async () => {
       try {
-        const headers = useRequestHeaders(["cookie"]);
-        const tokens = await $apiFetcher<AuthLoginResponseDTO>("/api/v1/refresh/", {
-          method: "GET",
-          credentials: "include",
-          headers
-        });
-        const user = await fetchUser();
-
-        setAuth({
-          user,
-          accessToken: tokens.access
-        });
+        user.value = await fetchUser();
       } catch {
         clearAuth();
       } finally {
@@ -153,30 +86,35 @@ export const useAuthStore = defineStore("auth", () => {
     return initPromise.value;
   }
 
-  function hasPermission(permission: AuthPermissionCode | AuthPermissionCode[]): boolean {
-    if (!user.value) return false;
+  function can(permission: AuthPermissionCode): boolean {
+    if (user.value?.is_superuser) return true;
+    return permissionSet.value.has(permission);
+  }
 
-    const permissions = Array.isArray(permission) ? permission : [permission];
-    return permissions.some((p) => userPermissions.value.some((up) => up.codename === p));
+  function canAny(...permissions: AuthPermissionCode[]): boolean {
+    return permissions.some(can);
+  }
+
+  function canAll(...permissions: AuthPermissionCode[]): boolean {
+    return permissions.every(can);
   }
 
   return {
     user,
-    accessToken,
     isLoading,
     error,
     isRefreshing: readonly(isRefreshing),
     isInitialized: readonly(isInitialized),
 
     isAuthenticated,
-    userPermissions,
+    permissionSet,
 
-    setAuth,
     clearAuth,
     initAuth,
-    refreshAccessToken,
     login,
     logout,
-    hasPermission
+    can,
+    canAll,
+    canAny
   };
 });
