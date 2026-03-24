@@ -134,6 +134,14 @@ const AppPreset = definePreset(Aura, {
       }
     },
     toast: {
+      colorScheme: {
+        dark: {
+          info: { detailColor: "#FFFFFF" },
+          success: { detailColor: "#FFFFFF" },
+          warn: { detailColor: "#FFFFFF" },
+          error: { detailColor: "#FFFFFF" }
+        }
+      },
       summary: {
         fontSize: "0.875rem"
       },
