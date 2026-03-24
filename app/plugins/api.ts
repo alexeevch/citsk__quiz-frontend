@@ -1,11 +1,11 @@
 import type { NitroFetchRequest } from "nitropack";
 import { createFetchError } from "ofetch";
+import AuthRepository from "~/repositories/AuthRepository";
 
 export default defineNuxtPlugin(() => {
   const config = useRuntimeConfig();
   const baseURL = config.public.apiUrl;
-  const authStore = useAuthStore();
-
+  const refreshEndpoing = "/v1/auth/token/refresh/";
   if (!baseURL) {
     throw new Error("Missing public.apiUrl in runtime config");
   }
@@ -16,10 +16,6 @@ export default defineNuxtPlugin(() => {
     credentials: "include",
     onRequest(request) {
       request.options.headers.set("Accept", "application/json");
-
-      if (authStore.accessToken) {
-        request.options.headers.set("Authorization", `Bearer ${authStore.accessToken}`);
-      }
     },
     async onResponseError(ctx) {
       const error = createFetchError(ctx);
@@ -33,14 +29,14 @@ export default defineNuxtPlugin(() => {
       }
       ctx.options.retry = 1;
 
-      const newAccessToken = await authStore.refreshAccessToken();
+      await $fetch(refreshEndpoing, {
+        baseURL,
+        method: "POST",
+        credentials: "include"
+      });
 
       const newOptions = {
         ...ctx.options,
-        headers: {
-          ...ctx.options.headers,
-          authorization: `Bearer ${newAccessToken}`
-        },
         method: ctx.options.method as "GET" | "POST" | "PUT" | "DELETE" | "PATCH",
         credentials: "include" as RequestCredentials
       };
@@ -51,7 +47,10 @@ export default defineNuxtPlugin(() => {
 
   return {
     provide: {
-      apiFetcher
+      api: apiFetcher,
+      repositories: {
+        auth: new AuthRepository(apiFetcher)
+      }
     }
   };
 });
