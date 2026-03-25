@@ -1,4 +1,4 @@
-import type { AuthPermissionCode } from "~/types/api/AuthPermission";
+import type { AuthPermissionCode } from "~/types/api/Auth";
 
 export interface AppRouteWithMeta {
   meta?: {
