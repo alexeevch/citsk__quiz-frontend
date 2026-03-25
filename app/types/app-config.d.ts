@@ -5,12 +5,6 @@ declare module "nuxt/schema" {
     menu: {
       sidebarMenu: LayoutMenuItem[];
     };
-    auth: {
-      tokens: {
-        accessExpiresAt: number;
-        refreshExpiresAt: number;
-      };
-    };
   }
 }
 

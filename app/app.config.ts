@@ -149,12 +149,5 @@ export default defineAppConfig({
         ]
       }
     ]
-  },
-
-  auth: {
-    tokens: {
-      accessExpiresAt: 60 * 60 * 0.5,
-      refreshExpiresAt: 60 * 60 * 24 * 7
-    }
   }
 });
