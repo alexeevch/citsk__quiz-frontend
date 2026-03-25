@@ -11,16 +11,13 @@ const authStore = useAuthStore();
 const { isLoading, error } = storeToRefs(authStore);
 const resolver = ref(zodResolver(userLoginSchema));
 
-const initialValues = ref({
+const initialValues = reactive({
   email: "",
   password: ""
 });
 
 const onFormSubmit = async ({ values, valid }: FormSubmitEvent) => {
-  if (!valid) {
-    showWarn("Проверьте правильность заполнения полей");
-    return;
-  }
+  if (!valid) return;
 
   try {
     await authStore.login(values as AuthLoginDTO);
@@ -32,13 +29,39 @@ const onFormSubmit = async ({ values, valid }: FormSubmitEvent) => {
 </script>
 
 <template>
-  <Form v-slot="$form" class="sign-in__form" :initial-values :resolver @submit="onFormSubmit">
-    <div class="sign-in__form-field">
-      <InputText name="email" type="text" placeholder="Email" fluid />
-    </div>
-    <div class="sign-in__form-field">
-      <Password name="password" placeholder="Пароль" :feedback="false" fluid toggle-mask />
-    </div>
+  <Form
+    v-slot="$form"
+    class="sign-in__form"
+    :initial-values
+    :resolver
+    :validate-on-blur="true"
+    :validate-on-value-update="false"
+    @submit="onFormSubmit"
+  >
+    <FormField
+      v-slot="$field"
+      class="sign-in__form-field"
+      name="email"
+      :initial-value="initialValues.email"
+    >
+      <InputText type="text" placeholder="Email" fluid />
+      <Message v-if="$field?.invalid" severity="error" size="small" variant="simple">
+        {{ $field.error?.message }}
+      </Message>
+    </FormField>
+
+    <FormField
+      v-slot="$field"
+      class="sign-in__form-field"
+      name="password"
+      :initial-value="initialValues.password"
+    >
+      <Password placeholder="Пароль" :feedback="false" fluid toggle-mask />
+      <Message v-if="$field?.invalid" severity="error" size="small" variant="simple">
+        {{ $field.error?.message }}
+      </Message>
+    </FormField>
+
     <Button
       type="submit"
       label="Войти"
@@ -57,5 +80,11 @@ const onFormSubmit = async ({ values, valid }: FormSubmitEvent) => {
   padding: var(--padding-card-sm);
   border-radius: var(--border-radius-primary);
   background-color: var(--color-bg-card);
+
+  &-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
 }
 </style>
