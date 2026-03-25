@@ -74,6 +74,7 @@ export const useAuthStore = defineStore("auth", () => {
 
     initPromise.value = (async () => {
       try {
+        await load(() => $repositories.auth.refresh());
         user.value = await fetchUser();
       } catch {
         clearAuth();
