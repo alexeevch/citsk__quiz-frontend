@@ -3,6 +3,7 @@ import { useLayout } from "~/composables/useLayout";
 import AppSidebar from "~/components/layout/app-sidebar.vue";
 import AppTopbar from "~/components/layout/app-topbar.vue";
 import { useBreakpoints } from "~/composables/useBreakpoints";
+import AppBreadcrumbs from "~/components/layout/app-breadcrumbs.vue";
 
 const { isSidebarVisible, toggleSidebar } = useLayout();
 const { isMobile } = useBreakpoints();
@@ -23,6 +24,7 @@ const { menu } = useAppConfig();
 
     <main class="layout__main-container">
       <div class="layout__main">
+        <AppBreadcrumbs />
         <NuxtPage />
       </div>
     </main>

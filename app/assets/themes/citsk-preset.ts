@@ -148,6 +148,16 @@ const AppPreset = definePreset(Aura, {
       detail: {
         fontSize: "0.875rem"
       }
+    },
+    breadcrumb: {
+      root: {
+        padding: "0"
+      },
+      colorScheme: {
+        dark: {
+          background: "transparent"
+        }
+      }
     }
   }
 });
