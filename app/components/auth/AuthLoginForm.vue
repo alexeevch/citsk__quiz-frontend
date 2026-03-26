@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { zodResolver } from "@primevue/forms/resolvers/zod";
-import { userLoginSchema } from "~/utils/zod";
+import { userLoginSchema } from "~/utils/validadors/auth";
 import type { FormSubmitEvent } from "@primevue/forms";
 import { useAppToast } from "~/composables/useAppToast";
 import type { AuthLoginDTO } from "~/types/api/Auth";
