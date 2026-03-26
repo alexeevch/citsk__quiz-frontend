@@ -66,8 +66,3 @@ export const userPasswordSchema = userPasswordFieldsSchema.refine(
     error: "Пароли не совпадают"
   }
 );
-
-export const userLoginSchema = z.object({
-  email: emailSchema,
-  password: z.string().trim().min(1, { error: "Введите пароль" })
-});
