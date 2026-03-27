@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { emailSchema } from "~/utils/validadors/shared";
+import { emailSchema, emptyToNull } from "~/utils/validadors/shared";
 
 export const organizationSchema = z.object({
   name: z.string().min(1, "Введите название"),
@@ -11,6 +11,6 @@ export const organizationSchema = z.object({
       message: "Введите корректный номер телефона"
     }),
   email: emailSchema,
-  site_url: z.url("Введите корректный URL").optional().or(z.literal("")),
-  address: z.string().optional()
+  site_url: emptyToNull(z.url("Введите корректный URL").optional().or(z.literal(""))),
+  address: emptyToNull(z.string().optional())
 });
