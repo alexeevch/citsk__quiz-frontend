@@ -6,32 +6,32 @@ import type {
 } from "~/types/api/Organization";
 
 class OrganizationRepository extends BaseRepository {
-  private readonly prefix = "/v1/organizations/";
+  private readonly resource = "/v1/organizations/";
 
   getAll(): Promise<OrganizationData[]> {
-    return this.call<OrganizationData[]>(this.prefix);
+    return this.call<OrganizationData[]>(this.resource);
   }
 
   getById(id: number): Promise<OrganizationData> {
-    return this.call<OrganizationData>(this.prefix + id);
+    return this.call<OrganizationData>(this.resource + id);
   }
 
   create(dto: OrganizationCreateDTO): Promise<OrganizationData> {
-    return this.call<OrganizationData>(this.prefix, {
+    return this.call<OrganizationData>(this.resource, {
       method: "POST",
       body: dto
     });
   }
 
   update(id: number, dto: OrganizationUpdateDTO): Promise<OrganizationData> {
-    return this.call<OrganizationData>(this.prefix + id, {
+    return this.call<OrganizationData>(this.resource + id, {
       method: "PATCH",
       body: dto
     });
   }
 
   delete(id: number): Promise<undefined> {
-    return this.call(this.prefix + id, {
+    return this.call(this.resource + id, {
       method: "DELETE"
     });
   }
