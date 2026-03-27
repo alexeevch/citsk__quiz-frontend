@@ -74,7 +74,7 @@ const onSubmit = async ({ values, valid }: FormSubmitEvent) => {
     >
       <FormField v-slot="$field" name="name" class="org-drawer__field">
         <label>Название *</label>
-        <InputText placeholder="ООО Пример" fluid />
+        <InputText placeholder="Центр информационных технологий Ставропольского края" fluid />
         <Message v-if="$field?.invalid" severity="error" size="small" variant="simple">
           {{ $field.error?.message }}
         </Message>
@@ -146,7 +146,6 @@ const onSubmit = async ({ values, valid }: FormSubmitEvent) => {
     gap: 0.25rem;
 
     label {
-      font-size: 0.875rem;
       color: var(--color-text-gray);
     }
   }
