@@ -66,3 +66,6 @@ export const userPasswordSchema = userPasswordFieldsSchema.refine(
     error: "Пароли не совпадают"
   }
 );
+
+export const emptyToNull = <T extends z.ZodTypeAny>(schema: T) =>
+  schema.optional().transform((val) => (val === "" || val === undefined ? null : val));
