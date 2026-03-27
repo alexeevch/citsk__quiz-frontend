@@ -117,8 +117,6 @@ const confirmDelete = (org: OrganizationData) => {
       </template>
     </DataTable>
 
-    <ConfirmDialog />
-
     <AdminOrganizationDrawer
       v-model:visible="drawerVisible"
       :organization="selectedOrganization"
