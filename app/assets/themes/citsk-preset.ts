@@ -158,6 +158,50 @@ const AppPreset = definePreset(Aura, {
           background: "transparent"
         }
       }
+    },
+    datatable: {
+      colorScheme: {
+        dark: {
+          root: {
+            background: "transparent"
+          },
+          header: {
+            background: "transparent"
+          },
+          headerCell: {
+            background: "transparent",
+            hoverBackground: "{surface.200}",
+            color: "{surface.600}",
+            borderColor: "{surface.200}"
+          },
+          row: {
+            background: "transparent",
+            hoverBackground: "{surface.200}",
+            color: "{surface.800}",
+            hoverColor: "surface.900"
+          },
+          bodyCell: {
+            borderColor: "{surface.200}"
+          },
+          footer: {
+            background: "transparent"
+          }
+        }
+      }
+    },
+    drawer: {
+      root: {
+        title: {
+          fontSize: "1rem"
+        }
+      },
+      colorScheme: {
+        dark: {
+          color: "{surface.800}",
+          background: "{surface.100}",
+          borderColor: "{surface.200}"
+        }
+      }
     }
   }
 });
