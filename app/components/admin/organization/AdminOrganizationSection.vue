@@ -64,9 +64,9 @@ const confirmDelete = (org: OrganizationData) => {
       row-hover
       class="org-section__table"
     >
-      <Column expander style="width: 3rem" />
+      <Column expander />
 
-      <Column field="id" header="ID" style="width: 5rem" />
+      <Column field="id" header="ID" />
 
       <Column field="name" header="Название" />
 
@@ -80,7 +80,7 @@ const confirmDelete = (org: OrganizationData) => {
 
       <Column field="email" header="Email" />
 
-      <Column style="width: 7rem">
+      <Column>
         <template #body="{ data }">
           <div class="org-section__actions">
             <Button icon="pi pi-pencil" severity="secondary" text rounded @click="openEdit(data)" />
