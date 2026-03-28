@@ -2,6 +2,7 @@ import type { NitroFetchRequest } from "nitropack";
 import { createFetchError } from "ofetch";
 import AuthRepository from "~/repositories/AuthRepository";
 import OrganizationRepository from "~/repositories/OrganizationRepository";
+import QuizRepository from "~/repositories/QuizRepository";
 
 export default defineNuxtPlugin(() => {
   const config = useRuntimeConfig();
@@ -51,7 +52,8 @@ export default defineNuxtPlugin(() => {
       api: apiFetcher,
       repositories: {
         auth: new AuthRepository(apiFetcher),
-        organization: new OrganizationRepository(apiFetcher)
+        organization: new OrganizationRepository(apiFetcher),
+        quiz: new QuizRepository(apiFetcher)
       }
     }
   };
