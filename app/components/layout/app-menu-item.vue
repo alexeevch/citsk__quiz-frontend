@@ -12,8 +12,10 @@ const { toggleExpandedKey, isKeyExpanded } = useLayout();
 
 const hasChildren = computed(() => !!props.item.children?.length);
 const isExpanded = computed(() => isKeyExpanded(props.item.key!));
+const isDisabled = computed(() => !!props.item.disabled);
 
 function handleClick() {
+  if (isDisabled.value) return;
   if (hasChildren.value) {
     toggleExpandedKey(props.item.key!);
   }
@@ -39,11 +41,20 @@ function onLeave(el: Element) {
 </script>
 
 <template>
-  <li v-if="!item.hidden" class="menu-item" :class="{ 'menu-item--parent': hasChildren }">
+  <li
+    v-if="!item.hidden"
+    class="menu-item"
+    :class="{
+      'menu-item--parent': hasChildren,
+      'menu-item--disabled': isDisabled
+    }"
+  >
     <button
       v-if="hasChildren"
       class="menu-item__link menu-item__link--toggle"
       :class="{ 'menu-item__link--expanded': isExpanded }"
+      :disabled="isDisabled"
+      :aria-disabled="isDisabled"
       @click="handleClick"
     >
       <i v-if="item.icon" :class="['menu-item__icon', item.icon]" />
@@ -53,6 +64,15 @@ function onLeave(el: Element) {
         :class="{ 'menu-item__chevron--expanded': isExpanded }"
       />
     </button>
+
+    <span
+      v-else-if="item.to && isDisabled"
+      class="menu-item__link menu-item__link--disabled"
+      :aria-disabled="true"
+    >
+      <i v-if="item.icon" :class="['menu-item__icon', item.icon]" />
+      <span class="menu-item__label">{{ item.label }}</span>
+    </span>
 
     <NuxtLink
       v-else-if="item.to"
@@ -87,6 +107,11 @@ function onLeave(el: Element) {
 
 .menu-item {
   list-style: none;
+
+  &--disabled {
+    opacity: 0.45;
+    pointer-events: none;
+  }
 
   &__link {
     display: flex;
@@ -128,6 +153,11 @@ function onLeave(el: Element) {
         background: transparent;
         color: var(--text-color);
       }
+    }
+
+    &--disabled {
+      cursor: not-allowed;
+      pointer-events: none;
     }
   }
 
