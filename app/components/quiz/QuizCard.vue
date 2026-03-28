@@ -3,31 +3,47 @@ import type { QuizData } from "~/types/api/Quiz";
 import type { LayoutMenuItem } from "~/types/Layout";
 import { useQuizStore } from "~/stores/quizStore";
 import { useAppToast } from "~/composables/useAppToast";
+import { useQuizFilters } from "~/composables/useQuizFilters";
 
 type Status = {
   severity: "success" | "warn";
   value: "Опубликована" | "Скрыта";
 };
 
-const quizStore = useQuizStore();
-const { showError, showSuccess } = useAppToast();
-
-const props = defineProps<{ item: QuizData; loading?: boolean }>();
+const props = defineProps<{ item: QuizData }>();
 
 const menu = ref();
+const isLoading = ref(false);
+const quizStore = useQuizStore();
+const { filters } = useQuizFilters();
+const { showError, showSuccess } = useAppToast();
 
 const actionMenu = computed<LayoutMenuItem[]>(() => [
   {
     label: "Действия",
     items: [
       {
-        icon: props.item.is_active ? "pi pi pi-eye-slash" : "pi pi-eye",
+        icon: props.item.is_active ? "pi pi-eye-slash" : "pi pi-eye",
         label: props.item.is_active ? "Скрыть" : "Опубликовать",
         async command() {
-          if (props.item.is_active) {
-            await hideQuiz(props.item.id);
-          } else {
-            await showQuiz(props.item.id);
+          try {
+            isLoading.value = true;
+            if (props.item.is_active) {
+              await quizStore.hideQuiz(props.item.id);
+              showSuccess("Удалось!", "Викторина скрыта от пользователей");
+            } else {
+              await quizStore.showQuiz(props.item.id);
+              showSuccess("Получилось!", "Викторина доступна пользователям");
+            }
+            await quizStore.fetchQuizzes(filters.value);
+          } catch {
+            showError(
+              props.item.is_active
+                ? "Не удалось скрыть викторину"
+                : "Не удалось опубликовать викторину"
+            );
+          } finally {
+            isLoading.value = false;
           }
         }
       },
@@ -44,35 +60,9 @@ const actionMenu = computed<LayoutMenuItem[]>(() => [
 
 const status = computed<Status>(() =>
   props.item.is_active
-    ? {
-        severity: "success",
-        value: "Опубликована"
-      }
-    : {
-        severity: "warn",
-        value: "Скрыта"
-      }
+    ? { severity: "success", value: "Опубликована" }
+    : { severity: "warn", value: "Скрыта" }
 );
-
-const showQuiz = async (id: number) => {
-  try {
-    await quizStore.showQuiz(id);
-    showSuccess("Получилось!", "Викторина доступна пользователям");
-  } catch (e) {
-    showError("Не удалось опубликовать викторину");
-    throw e;
-  }
-};
-
-const hideQuiz = async (id: number) => {
-  try {
-    await quizStore.hideQuiz(id);
-    showSuccess("Получилось!", "Викторина скрыта от пользователей");
-  } catch (e) {
-    showError("Не удалось скрыть викторину");
-    throw e;
-  }
-};
 
 const toggleActionMenu = (event) => {
   menu.value.toggle(event);
@@ -110,10 +100,11 @@ const emit = defineEmits<{
           size="small"
           type="button"
           severity="secondary"
-          icon="pi pi-ellipsis-v"
           aria-haspopup="true"
           rounded
+          :icon="isLoading ? 'pi pi-spin pi-spinner' : 'pi pi-ellipsis-v'"
           :aria-controls="`overlay_menu-${item.id}`"
+          :disabled="isLoading"
           @click="toggleActionMenu"
         />
         <Button v-slot="slotProps" as-child size="small" severity="contrast">

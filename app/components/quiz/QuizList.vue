@@ -11,26 +11,31 @@ const emit = defineEmits<{
 
 <template>
   <div class="quiz-list">
-    <div v-if="loading" class="quiz-list__skeleton">
-      <Skeleton style="height: 4rem" />
-      <Skeleton style="height: 4rem" />
-      <Skeleton style="height: 4rem" />
-      <Skeleton style="height: 4rem" />
-    </div>
+    <Transition name="fade" mode="out-in">
+      <!-- Скелетон -->
+      <div v-if="loading" key="skeleton" class="quiz-list__skeleton">
+        <Skeleton style="height: 5rem" />
+        <Skeleton style="height: 5rem" />
+        <Skeleton style="height: 5rem" />
+        <Skeleton style="height: 5rem" />
+      </div>
 
-    <div v-else-if="!items.length" class="quiz-list__empty">
-      <i class="pi pi-inbox quiz-list__empty-icon" />
-      <p class="quiz-list__empty-text">Викторины не найдены</p>
-    </div>
+      <!-- Пустой список -->
+      <div v-else-if="!items.length" key="empty" class="quiz-list__empty">
+        <i class="pi pi-inbox quiz-list__empty-icon" />
+        <p class="quiz-list__empty-text">Викторины не найдены</p>
+      </div>
 
-    <template v-else>
-      <QuizCard
-        v-for="item in items"
-        :key="item.id"
-        :item
-        @on-edit-quiz="emit('onEditQuiz', $event)"
-      />
-    </template>
+      <!-- Список -->
+      <div v-else class="quiz-list__items">
+        <QuizCard
+          v-for="item in items"
+          :key="item.id"
+          :item
+          @on-edit-quiz="emit('onEditQuiz', $event)"
+        />
+      </div>
+    </Transition>
   </div>
 </template>
 
@@ -38,7 +43,6 @@ const emit = defineEmits<{
 .quiz-list {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
 
   &__skeleton {
     display: flex;
@@ -66,5 +70,21 @@ const emit = defineEmits<{
       opacity: 0.6;
     }
   }
+
+  &__items {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity var(--transition-duration) ease-in-out;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>

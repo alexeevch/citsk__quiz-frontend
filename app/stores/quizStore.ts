@@ -33,11 +33,11 @@ export const useQuizStore = defineStore("quiz", () => {
   };
 
   const showQuiz = async (id: number) => {
-    return await load(() => $repositories.quiz.update(id, { is_active: true }));
+    return await $repositories.quiz.update(id, { is_active: true });
   };
 
   const hideQuiz = async (id: number) => {
-    return await load(() => $repositories.quiz.update(id, { is_active: false }));
+    return await $repositories.quiz.update(id, { is_active: false });
   };
 
   return {

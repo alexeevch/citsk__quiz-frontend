@@ -22,7 +22,7 @@ class QuizRepository extends BaseRepository {
   }
 
   update(id: number, dto: QuizUpdateDTO): Promise<QuizData> {
-    return this.call<QuizData>(this.resource + id, {
+    return this.call<QuizData>(`${this.resource}${id}/`, {
       method: "PATCH",
       body: dto
     });
