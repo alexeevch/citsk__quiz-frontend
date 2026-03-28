@@ -12,8 +12,6 @@ const selectedOrganization = ref<OrganizationData | null>(null);
 
 const expandedRows = ref<OrganizationData[] | null>(null);
 
-onMounted(() => store.fetchOrganizations());
-
 const openCreate = () => {
   selectedOrganization.value = null;
   drawerVisible.value = true;
@@ -45,6 +43,10 @@ const confirmDelete = (org: OrganizationData) => {
     }
   });
 };
+
+onMounted(async () => {
+  if (!organizations.value) await store.fetchOrganizations();
+});
 </script>
 
 <template>
