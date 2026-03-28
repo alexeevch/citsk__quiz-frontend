@@ -54,7 +54,11 @@ watch(
     />
 
     <template #aside>
-      <QuizFilter :model-value="filters" @update:model-value="setFilters" />
+      <QuizFilter
+        class="quiz-section__filter"
+        :model-value="filters"
+        @update:model-value="setFilters"
+      />
     </template>
   </AppLayoutSection>
 
@@ -76,6 +80,11 @@ watch(
       margin: 0;
       padding: 0;
     }
+  }
+
+  &__filter {
+    position: sticky;
+    top: 0;
   }
 
   &__content {
