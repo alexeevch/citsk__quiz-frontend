@@ -203,6 +203,64 @@ const AppPreset = definePreset(Aura, {
           borderColor: "{surface.200}"
         }
       }
+    },
+    select: {
+      colorScheme: {
+        dark: {
+          overlay: {
+            background: "{surface.200}",
+            borderColor: "{surface.300}",
+            color: "{surface.600}"
+          },
+          option: {
+            color: "{surface.700}",
+            focusBackground: "{surface.400}",
+            focusColor: "{surface.900}"
+          }
+        }
+      }
+    },
+    menu: {
+      colorScheme: {
+        dark: {
+          background: "{surface.200}",
+          borderColor: "{surface.300}",
+          item: {
+            color: "{surface.700}",
+            focusBackground: "{surface.400}",
+            focusColor: "{surface.900}",
+            icon: {
+              focusColor: "{surface.900}"
+            }
+          }
+        }
+      }
+    },
+    button: {
+      colorScheme: {
+        dark: {
+          root: {
+            secondary: {
+              background: "{surface.200}",
+              hoverBackground: "{surface.300}",
+              color: "{surface.700}",
+              hoverColor: "{surface.800}",
+              borderColor: "{surface.300}",
+              hoverBorderColor: "{surface.400}"
+            }
+          }
+        }
+      }
+    },
+    tag: {
+      colorScheme: {
+        dark: {
+          secondary: {
+            background: "{surface.200}",
+            color: "{surface.600}"
+          }
+        }
+      }
     }
   }
 });
