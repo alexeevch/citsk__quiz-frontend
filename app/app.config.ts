@@ -53,7 +53,7 @@ export default defineAppConfig({
           {
             key: "quiz-winners",
             label: "Победители",
-            icon: "pi pi-sparkles",
+            icon: "pi pi-trophy",
             to: "/quiz/winners"
           }
         ]
