@@ -23,6 +23,7 @@ export const useAuthStore = defineStore("auth", () => {
   const permissionSet = computed(
     () => new Set(user.value?.permissions.map((p) => p.codename) ?? [])
   );
+  const isAdmin = computed(() => user.value?.is_staff || user.value?.is_superuser);
 
   async function fetchUser() {
     try {
@@ -109,6 +110,7 @@ export const useAuthStore = defineStore("auth", () => {
 
     isAuthenticated,
     permissionSet,
+    isAdmin,
 
     clearAuth,
     initAuth,
