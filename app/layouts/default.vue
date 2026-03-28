@@ -105,6 +105,7 @@ const { menu } = useAppConfig();
   }
 
   &__main {
+    position: relative;
     overflow-y: auto;
     flex: 1 1 auto;
     padding: var(--padding-card-md);
