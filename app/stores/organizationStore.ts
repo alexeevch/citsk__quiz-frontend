@@ -10,7 +10,7 @@ export const useOrganizationStore = defineStore("organization", () => {
   const { $repositories } = useNuxtApp();
   const { error, isLoading, load } = useStoreRequest();
 
-  const organizations = ref<OrganizationData[]>([]);
+  const organizations = ref<OrganizationData[] | null>(null);
 
   const fetchOrganizations = async () => {
     try {
