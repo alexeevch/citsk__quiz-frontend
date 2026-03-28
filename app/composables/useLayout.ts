@@ -17,15 +17,20 @@ const isSidebarVisible = computed(() => {
   return isMobile.value ? isMobileMenuVisible.value : settings.value.isSidebarPinned;
 });
 
-watch(isMobile, (newValue) => {
-  if (!newValue) isMobileMenuVisible.value = false;
-});
-
 if (import.meta.client) {
   settings.value.isDarkMode = document.documentElement.classList.contains(DARK_MODE_CSS_CLASS);
 }
 
 const expandedKeysSet = computed(() => new Set(settings.value.expandedKeys));
+
+watch(isMobile, (newValue) => {
+  if (!newValue) isMobileMenuVisible.value = false;
+});
+
+const router = useRouter();
+router.afterEach(() => {
+  if (isMobile.value) isMobileMenuVisible.value = false;
+});
 
 export function useLayout() {
   function toggleSidebar() {
