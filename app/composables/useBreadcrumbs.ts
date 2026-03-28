@@ -1,9 +1,14 @@
 import { useRoute } from "vue-router";
 
-const SEGMENT_LABELS: Record<string, string> = {
-  admin: "Администрирование"
+type SegmentConfig = {
+  label: string;
+  disabled: boolean;
 };
 
+const SEGMENT_LABELS: Record<string, SegmentConfig> = {
+  admin: { label: "Администрирование", disabled: true },
+  quiz: { label: "Викторины", disabled: false }
+};
 export function useBreadcrumbs() {
   const route = useRoute();
 
@@ -27,9 +32,9 @@ export function useBreadcrumbs() {
       const fallbackLabel = segment.charAt(0).toUpperCase() + segment.slice(1).replace(/-/g, " ");
 
       crumbs.push({
-        label: metaLabel ?? dictLabel ?? fallbackLabel,
+        label: metaLabel ?? dictLabel?.label ?? fallbackLabel,
         route: path,
-        textOnly: !!dictLabel
+        textOnly: !!dictLabel?.disabled
       });
     });
 
