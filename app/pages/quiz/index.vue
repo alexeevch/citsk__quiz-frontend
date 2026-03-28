@@ -5,10 +5,13 @@ const pageName = "Викторины";
 useSeoMeta({
   title: `${pageName} - ${appName}`
 });
+
+definePageMeta({
+  permissions: ["api.view_quiz"],
+  breadcrumb: pageName
+});
 </script>
 
 <template>
-  <div>
-    <h1>{{ pageName }}</h1>
-  </div>
+  <QuizSection :title="pageName" />
 </template>
