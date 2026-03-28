@@ -98,7 +98,7 @@ const emit = defineEmits<{
           {{ item.name }}
         </span>
 
-        <div class="quiz-card__organization">
+        <div v-if="item.organization" class="quiz-card__organization">
           <i class="quiz-card__organization-icon pi pi-building"></i>
           <span class="quiz-card__organization-name">{{ item.organization.name }}</span>
         </div>
