@@ -21,6 +21,7 @@ const actionMenu = computed<LayoutMenuItem[]>(() => [
     label: "Действия",
     items: [
       {
+        icon: props.item.is_active ? "pi pi pi-eye-slash" : "pi pi-eye",
         label: props.item.is_active ? "Скрыть" : "Опубликовать",
         async command() {
           if (props.item.is_active) {
@@ -31,9 +32,10 @@ const actionMenu = computed<LayoutMenuItem[]>(() => [
         }
       },
       {
+        icon: "pi pi-pencil",
         label: "Редактировать",
         command() {
-          emit("editQuiz", props.item);
+          emit("onEditQuiz", props.item);
         }
       }
     ]
@@ -77,7 +79,7 @@ const toggleActionMenu = (event) => {
 };
 
 const emit = defineEmits<{
-  editQuiz: [quiz: QuizData];
+  onEditQuiz: [quiz: QuizData];
 }>();
 </script>
 

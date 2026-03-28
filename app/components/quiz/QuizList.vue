@@ -3,6 +3,10 @@ import type { QuizData } from "~/types/api/Quiz";
 import QuizCard from "~/components/quiz/QuizCard.vue";
 
 defineProps<{ items: QuizData[]; loading?: boolean }>();
+
+const emit = defineEmits<{
+  onEditQuiz: [quiz: QuizData];
+}>();
 </script>
 
 <template>
@@ -20,7 +24,12 @@ defineProps<{ items: QuizData[]; loading?: boolean }>();
     </div>
 
     <template v-else>
-      <QuizCard v-for="item in items" :key="item.id" :item />
+      <QuizCard
+        v-for="item in items"
+        :key="item.id"
+        :item
+        @on-edit-quiz="emit('onEditQuiz', $event)"
+      />
     </template>
   </div>
 </template>
