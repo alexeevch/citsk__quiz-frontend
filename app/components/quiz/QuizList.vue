@@ -1,0 +1,61 @@
+<script setup lang="ts">
+import type { QuizData } from "~/types/api/Quiz";
+import QuizCard from "~/components/quiz/QuizCard.vue";
+
+defineProps<{ items: QuizData[]; loading?: boolean }>();
+</script>
+
+<template>
+  <div class="quiz-list">
+    <div v-if="loading" class="quiz-list__skeleton">
+      <Skeleton style="height: 4rem" />
+      <Skeleton style="height: 4rem" />
+      <Skeleton style="height: 4rem" />
+      <Skeleton style="height: 4rem" />
+    </div>
+
+    <div v-else-if="!items.length" class="quiz-list__empty">
+      <i class="pi pi-inbox quiz-list__empty-icon" />
+      <p class="quiz-list__empty-text">Викторины не найдены</p>
+    </div>
+
+    <template v-else>
+      <QuizCard v-for="item in items" :key="item.id" :item />
+    </template>
+  </div>
+</template>
+
+<style scoped lang="scss">
+.quiz-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+
+  &__skeleton {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+  }
+
+  &__empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 3rem 1rem;
+    color: var(--color-text-gray);
+
+    &-icon {
+      font-size: 2.5rem;
+      opacity: 0.4;
+    }
+
+    &-text {
+      font-size: pxToRem(14);
+      opacity: 0.6;
+    }
+  }
+}
+</style>
