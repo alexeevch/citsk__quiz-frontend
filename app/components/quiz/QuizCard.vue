@@ -133,13 +133,14 @@ const emit = defineEmits<{
   overflow: hidden;
   gap: 1rem;
   padding: var(--padding-card-sm);
-  box-shadow: var(--shadow-card);
+  border: 3px solid var(--color-bg-border);
   border-radius: var(--border-radius-primary);
 
   &__content {
     width: 100%;
     display: flex;
     justify-content: space-between;
+    gap: 0.5rem;
   }
 
   &__body {
