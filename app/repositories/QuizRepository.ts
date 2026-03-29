@@ -11,7 +11,7 @@ class QuizRepository extends BaseRepository {
   }
 
   getById(id: number): Promise<QuizData> {
-    return this.call<QuizData>(this.resource + id);
+    return this.call<QuizData>(this.resource + id + "/");
   }
 
   create(dto: QuizCreateDTO): Promise<QuizData> {
@@ -29,7 +29,7 @@ class QuizRepository extends BaseRepository {
   }
 
   delete(id: number): Promise<undefined> {
-    return this.call(this.resource + id, {
+    return this.call(this.resource + id + "/", {
       method: "DELETE"
     });
   }
