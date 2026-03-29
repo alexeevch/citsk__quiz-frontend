@@ -11,7 +11,7 @@ const props = defineProps<{ item: QuizData }>();
 const menu = ref();
 const isLoading = ref(false);
 const quizStore = useQuizStore();
-const { status } = useQuiz(props.item);
+const { status } = useQuiz(ref(props.item));
 const { filters } = useQuizFilters();
 const { showError, showSuccess } = useAppToast();
 
