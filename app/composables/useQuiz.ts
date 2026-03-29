@@ -5,12 +5,14 @@ type QuizStatus = {
   value: "Опубликована" | "Скрыта";
 };
 
-export const useQuiz = (quiz: QuizData) => {
-  const status = computed<QuizStatus>(() =>
-    quiz.is_active
+export const useQuiz = (quiz: Ref<QuizData | null>) => {
+  const status = computed<QuizStatus | null>(() => {
+    if (!quiz.value) return null;
+    return quiz.value.is_active
       ? { severity: "success", value: "Опубликована" }
-      : { severity: "warn", value: "Скрыта" }
-  );
+      : { severity: "warn", value: "Скрыта" };
+  });
+
   return {
     status
   };
