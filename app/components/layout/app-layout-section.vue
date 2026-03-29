@@ -20,6 +20,8 @@ const slots = useSlots();
 </template>
 
 <style scoped lang="scss">
+@use "~/assets/styles/common/mixins.scss" as mixins;
+
 .layout-section {
   display: flex;
   flex-direction: column;
@@ -30,6 +32,10 @@ const slots = useSlots();
     grid-template-columns: minmax(0, 6fr) minmax(0, 3fr);
     gap: 2rem;
     flex: 1;
+
+    @include mixins.screensFrom("sm") {
+      grid-template-columns: 1fr;
+    }
 
     &--full {
       grid-template-columns: 1fr;
