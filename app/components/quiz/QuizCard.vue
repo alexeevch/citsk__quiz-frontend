@@ -4,17 +4,14 @@ import type { LayoutMenuItem } from "~/types/Layout";
 import { useQuizStore } from "~/stores/quizStore";
 import { useAppToast } from "~/composables/useAppToast";
 import { useQuizFilters } from "~/composables/useQuizFilters";
-
-type Status = {
-  severity: "success" | "warn";
-  value: "Опубликована" | "Скрыта";
-};
+import { useQuiz } from "~/composables/useQuiz";
 
 const props = defineProps<{ item: QuizData }>();
 
 const menu = ref();
 const isLoading = ref(false);
 const quizStore = useQuizStore();
+const { status } = useQuiz(props.item);
 const { filters } = useQuizFilters();
 const { showError, showSuccess } = useAppToast();
 
@@ -58,12 +55,6 @@ const actionMenu = computed<LayoutMenuItem[]>(() => [
   }
 ]);
 
-const status = computed<Status>(() =>
-  props.item.is_active
-    ? { severity: "success", value: "Опубликована" }
-    : { severity: "warn", value: "Скрыта" }
-);
-
 const toggleActionMenu = (event) => {
   menu.value.toggle(event);
 };
@@ -78,12 +69,13 @@ const emit = defineEmits<{
     <div class="quiz-card__content">
       <div class="quiz-card__body">
         <div class="quiz-card__tags">
-          <Tag class="quiz-card__tags-item" :severity="status.severity" :value="status.value"></Tag>
+          <Tag class="quiz-card__tags-item" :value="`№: ${item.id}`"></Tag>
           <Tag
             class="quiz-card__tags-item"
             severity="secondary"
             :value="`Вопросов: ${item.total_questions}`"
           ></Tag>
+          <Tag class="quiz-card__tags-item" :severity="status.severity" :value="status.value"></Tag>
         </div>
 
         <span class="quiz-card__name">
