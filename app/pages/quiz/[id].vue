@@ -25,7 +25,7 @@ async function loadQuiz() {
   }
 }
 
-onMounted(async () => {
+onBeforeMount(async () => {
   await loadQuiz();
 });
 </script>
