@@ -6,29 +6,10 @@ const props = defineProps<{ quiz: QuizData | null; quizLoading?: boolean }>();
 
 const quizRef = toRef(props, "quiz");
 const { status } = useQuiz(quizRef);
-const questionsLoading = ref(true);
-const questions = ref<QuizQuestion[] | null>(null);
 
 const emit = defineEmits<{
   onQuizReload: [];
 }>();
-
-watch(
-  quizRef,
-  async (quiz) => {
-    if (!quiz?.id) return;
-
-    try {
-      questionsLoading.value = true;
-      questions.value = await useNuxtApp().$repositories.quiz.getQuestions(quiz.id);
-    } catch (e) {
-      console.error(e);
-    } finally {
-      questionsLoading.value = false;
-    }
-  },
-  { immediate: true }
-);
 </script>
 
 <template>
@@ -65,6 +46,13 @@ watch(
               <span class="quiz-section__description-title"> Описание викторины: </span>
               <span class="quiz-section__description-value">
                 {{ quiz?.description ?? "Отсутствует" }}
+              </span>
+            </div>
+
+            <div class="quiz-section__questions">
+              <span class="quiz-section__questions--title"> Вопросы: </span>
+              <span class="quiz-section__questions-value">
+                {{ quiz?.questions }}
               </span>
             </div>
           </div>

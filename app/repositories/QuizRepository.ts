@@ -39,10 +39,6 @@ class QuizRepository extends BaseRepository {
       method: "DELETE"
     });
   }
-
-  getQuestions(quizId: number): Promise<QuizQuestion[]> {
-    return this.call<QuizQuestion[]>(this.resource + quizId + "/questions/");
-  }
 }
 
 export default QuizRepository;
