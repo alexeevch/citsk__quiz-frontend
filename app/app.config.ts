@@ -14,6 +14,9 @@ export default defineAppConfig({
       },
       {
         label: "Администрирование",
+        meta: {
+          adminOnly: true
+        },
         items: [
           {
             key: "admin-users",
@@ -37,7 +40,10 @@ export default defineAppConfig({
             key: "quiz",
             label: "Викторины",
             icon: "pi pi-list-check",
-            to: "/quiz"
+            to: "/quiz",
+            meta: {
+              permissions: ["api.view_quiz"]
+            }
           },
           {
             key: "quiz-stat",

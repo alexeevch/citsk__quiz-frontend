@@ -4,6 +4,7 @@ export interface AppRouteWithMeta {
   meta?: {
     hidden?: boolean;
     guestOnly?: boolean;
+    adminOnly?: boolean;
     permissions?: AuthPermissionCode[];
   };
 }

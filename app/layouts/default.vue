@@ -4,10 +4,11 @@ import AppSidebar from "~/components/layout/app-sidebar.vue";
 import AppTopbar from "~/components/layout/app-topbar.vue";
 import { useBreakpoints } from "~/composables/useBreakpoints";
 import AppBreadcrumbs from "~/components/layout/app-breadcrumbs.vue";
+import { useAuthMenu } from "~/composables/useAuthMenu";
 
 const { isSidebarVisible, toggleSidebar } = useLayout();
 const { isMobile } = useBreakpoints();
-const { menu } = useAppConfig();
+const menu = useAuthMenu(useAppConfig().menu.sidebarMenu);
 </script>
 
 <template>
@@ -18,7 +19,7 @@ const { menu } = useAppConfig();
 
     <Transition name="sidebar">
       <aside v-show="isSidebarVisible" class="layout__sidebar">
-        <AppSidebar :menu="menu.sidebarMenu" />
+        <AppSidebar :menu="menu" />
       </aside>
     </Transition>
 
