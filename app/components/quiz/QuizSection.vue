@@ -71,7 +71,7 @@ watch(
     </template>
   </AppLayoutSection>
 
-  <QuizDrawer v-model:visible="drawerVisible" :quiz="selectedQuiz" @saved="onSaved" />
+  <LazyQuizDrawer v-model:visible="drawerVisible" :quiz="selectedQuiz" @saved="onSaved" />
 </template>
 
 <style scoped lang="scss">
