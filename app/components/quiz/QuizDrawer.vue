@@ -20,7 +20,7 @@ const organizationStore = useOrganizationStore();
 
 const { organizations, isLoading: orgLoading } = storeToRefs(organizationStore);
 const { user, isAdmin } = storeToRefs(useAuthStore());
-const { showWarn, showSuccess } = useAppToast();
+const { showError, showSuccess } = useAppToast();
 const { isLoading, error } = storeToRefs(quizStore);
 const hintPopover = ref();
 
@@ -49,7 +49,7 @@ const onSubmit = async ({ values, valid }: FormSubmitEvent) => {
     visible.value = false;
     emit("saved");
   } catch {
-    showWarn(
+    showError(
       isEdit.value ? "Не удалось обновить викторину" : "Не удалось создать викторину",
       error.value ?? ""
     );

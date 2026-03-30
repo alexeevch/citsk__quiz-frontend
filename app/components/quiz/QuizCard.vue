@@ -11,6 +11,7 @@ const props = defineProps<{ item: QuizData }>();
 const menu = ref();
 const isLoading = ref(false);
 const quizStore = useQuizStore();
+const { error } = storeToRefs(quizStore);
 const { status } = useQuiz(ref(props.item));
 const { filters } = useQuizFilters();
 const { showError, showSuccess } = useAppToast();
@@ -37,7 +38,8 @@ const actionMenu = computed<LayoutMenuItem[]>(() => [
             showError(
               props.item.is_active
                 ? "Не удалось скрыть викторину"
-                : "Не удалось опубликовать викторину"
+                : "Не удалось опубликовать викторину",
+              error.value ?? ""
             );
           } finally {
             isLoading.value = false;
