@@ -1,5 +1,11 @@
 import { BaseRepository } from "./BaseRepository";
-import type { QuizCreateDTO, QuizData, QuizQueryParams, QuizUpdateDTO } from "~/types/api/Quiz";
+import type {
+  QuizCreateDTO,
+  QuizData,
+  QuizQueryParams,
+  QuizQuestion,
+  QuizUpdateDTO
+} from "~/types/api/Quiz";
 
 class QuizRepository extends BaseRepository {
   private readonly resource = "/v1/quizzes/";
@@ -32,6 +38,10 @@ class QuizRepository extends BaseRepository {
     return this.call(this.resource + id + "/", {
       method: "DELETE"
     });
+  }
+
+  getQuestions(quizId: number): Promise<QuizQuestion[]> {
+    return this.call<QuizQuestion[]>(this.resource + quizId + "/questions/");
   }
 }
 
