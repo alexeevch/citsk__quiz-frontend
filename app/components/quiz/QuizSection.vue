@@ -5,9 +5,11 @@ import type { QuizData } from "~/types/api/Quiz";
 
 const props = defineProps<{ title?: string }>();
 
+const authStore = useAuthStore();
 const quizStore = useQuizStore();
+const { showError } = useAppToast();
 const { filters, setFilters } = useQuizFilters();
-const { quizList: quizzes, isLoading } = storeToRefs(quizStore);
+const { quizList: quizzes, isLoading, error } = storeToRefs(quizStore);
 
 const drawerVisible = ref(false);
 const selectedQuiz = ref<QuizData | null>(null);
@@ -31,8 +33,9 @@ watch(
   async (newFilters) => {
     try {
       await quizStore.fetchQuizzes(newFilters);
-    } catch (e) {
-      console.error(e);
+    } catch {
+      //TODO: #bug: Не появляется уведомление при первом открытии страницы
+      showError("Не удалось загрузить викторины", error.value ?? "Непредвиденная ошибка");
     }
   },
   { immediate: true }
@@ -43,7 +46,13 @@ watch(
   <AppLayoutSection class="quiz-section">
     <div class="quiz-section__heading h1">
       <h1 v-if="props.title" class="quiz-section__heading-title">{{ title }}</h1>
-      <Button label="Добавить" icon="pi pi-plus" size="small" @click="openCreate" />
+      <Button
+        label="Добавить"
+        icon="pi pi-plus"
+        size="small"
+        :disabled="!authStore.can('api.add_quiz')"
+        @click="openCreate"
+      />
     </div>
 
     <QuizList
