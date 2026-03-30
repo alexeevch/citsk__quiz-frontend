@@ -8,7 +8,7 @@ import type {
 } from "~/types/api/Quiz";
 
 class QuizRepository extends BaseRepository {
-  private readonly resource = "/v1/quizzes/";
+  private readonly resource = "/v1/admin/quizzes/";
 
   getAll(query?: QuizQueryParams): Promise<QuizData[]> {
     return this.call<QuizData[]>(this.resource, {

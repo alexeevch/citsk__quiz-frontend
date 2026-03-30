@@ -6,7 +6,7 @@ import type {
 } from "~/types/api/Organization";
 
 class OrganizationRepository extends BaseRepository {
-  private readonly resource = "/v1/organizations/";
+  private readonly resource = "/v1/admin/organizations/";
 
   getAll(): Promise<OrganizationData[]> {
     return this.call<OrganizationData[]>(this.resource);
