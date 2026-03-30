@@ -6,4 +6,4 @@ useSeoMeta({
 });
 </script>
 
-<template><div>homepage</div></template>
+<template><div class="test">Страница в разработке</div></template>
