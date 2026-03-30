@@ -1,15 +1,34 @@
 <script setup lang="ts">
-import type { QuizData } from "~/types/api/Quiz";
+import type { QuizData, QuizQuestion } from "~/types/api/Quiz";
 import AppLayoutSection from "~/components/layout/app-layout-section.vue";
 
 const props = defineProps<{ quiz: QuizData | null; quizLoading?: boolean }>();
 
 const quizRef = toRef(props, "quiz");
 const { status } = useQuiz(quizRef);
+const questionsLoading = ref(true);
+const questions = ref<QuizQuestion[] | null>(null);
 
 const emit = defineEmits<{
   onQuizReload: [];
 }>();
+
+watch(
+  quizRef,
+  async (quiz) => {
+    if (!quiz?.id) return;
+
+    try {
+      questionsLoading.value = true;
+      questions.value = await useNuxtApp().$repositories.quiz.getQuestions(quiz.id);
+    } catch (e) {
+      console.error(e);
+    } finally {
+      questionsLoading.value = false;
+    }
+  },
+  { immediate: true }
+);
 </script>
 
 <template>
