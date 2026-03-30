@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { QuizData, QuizQuestion } from "~/types/api/Quiz";
+import type { QuizData } from "~/types/api/Quiz";
 import AppLayoutSection from "~/components/layout/app-layout-section.vue";
 
 const props = defineProps<{ quiz: QuizData | null; quizLoading?: boolean }>();

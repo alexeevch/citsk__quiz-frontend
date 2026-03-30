@@ -1,11 +1,5 @@
 import { BaseRepository } from "./BaseRepository";
-import type {
-  QuizCreateDTO,
-  QuizData,
-  QuizQueryParams,
-  QuizQuestion,
-  QuizUpdateDTO
-} from "~/types/api/Quiz";
+import type { QuizCreateDTO, QuizData, QuizQueryParams, QuizUpdateDTO } from "~/types/api/Quiz";
 
 class QuizRepository extends BaseRepository {
   private readonly resource = "/v1/admin/quizzes/";
