@@ -1,4 +1,6 @@
 import type { OrganizationData } from "~/types/api/Organization";
+import type { AnswerWithCorrect } from "~/types/api/Answer";
+import type { QuestionData } from "~/types/api/Question";
 
 type BaseQuiz = {
   name: string;
@@ -15,3 +17,5 @@ export type QuizQueryParams = {
   is_active?: boolean;
   organization?: number;
 };
+
+export type QuizQuestion = QuestionData & { answers: AnswerWithCorrect[] };
