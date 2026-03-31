@@ -7,7 +7,8 @@ import QuizRepository from "~/repositories/QuizRepository";
 export default defineNuxtPlugin(() => {
   const config = useRuntimeConfig();
   const baseURL = config.public.apiUrl;
-  const refreshEndpoing = "/v1/auth/token/refresh/";
+  let refreshPromise: Promise<void> | null = null;
+
   if (!baseURL) {
     throw new Error("Missing public.apiUrl in runtime config");
   }
@@ -26,24 +27,25 @@ export default defineNuxtPlugin(() => {
         throw error;
       }
 
-      if (ctx.options.retry) {
+      if (ctx.options.retry === 0) {
         throw error;
       }
-      ctx.options.retry = 1;
 
-      await $fetch(refreshEndpoing, {
-        baseURL,
-        method: "POST",
-        credentials: "include"
-      });
+      if (!refreshPromise) {
+        refreshPromise = $fetch("/v1/auth/token/refresh/", {
+          baseURL,
+          method: "POST",
+          credentials: "include"
+        }).finally(() => {
+          refreshPromise = null;
+        }) as Promise<void>;
+      }
 
-      const newOptions = {
-        ...ctx.options,
-        method: ctx.options.method as "GET" | "POST" | "PUT" | "DELETE" | "PATCH",
-        credentials: "include" as RequestCredentials
-      };
-
-      return $fetch(ctx.request, newOptions);
+      try {
+        await refreshPromise;
+      } catch {
+        throw error;
+      }
     }
   });
 
