@@ -9,12 +9,22 @@
   --color-text-primary: var(--p-surface-1000);
   --color-text-gray: var(--p-surface-600);
   --color-text-active: var(--p-surface-800);
+  --color-text-warning: var(--p-tag-warn-color);
+  --color-text-danger: var(--p-tag-danger-color);
+  --color-text-info: var(--p-tag-info-color);
+  --color-text-success: var(--p-tag-success-color);
+  --color-text-secondary: var(--p-tag-secondary-color);
 
   --color-bg-primary: var(--p-surface-ground);
   --color-bg-active: var(--p-surface-100);
   --color-bg-hover: var(--p-surface-200);
   --color-bg-card: var(--p-card-background);
   --color-bg-border: var(--p-surface-200);
+  --color-bg-warning: var(--p-tag-warn-background);
+  --color-bg-danger: var(--p-tag-danger-background);
+  --color-bg-info: var(--p-tag-info-background);
+  --color-bg-success: var(--p-tag-success-background);
+  --color-bg-secondary: var(--p-tag-secondary-background);
 
   --shadow-card: var(--p-card-shadow);
 
