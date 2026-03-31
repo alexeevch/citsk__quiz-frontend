@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import DetailQuizSection from "~/components/quiz/DetailQuizSection.vue";
 import { useAppToast } from "~/composables/useAppToast";
 import type { QuizData } from "~/types/api/Quiz";
 
@@ -31,5 +30,5 @@ onBeforeMount(async () => {
 </script>
 
 <template>
-  <DetailQuizSection :quiz :quiz-loading @on-quiz-reload="loadQuiz" />
+  <QuizDetailSection :quiz :quiz-loading @on-quiz-reload="loadQuiz" />
 </template>
