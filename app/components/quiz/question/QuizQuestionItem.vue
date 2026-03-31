@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import type { QuizQuestion } from "~/types/api/Quiz";
 import type { LayoutMenuItem } from "~/types/Layout";
+import type { QuestionData } from "~/types/api/Question";
 
-const props = defineProps<{ item: QuizQuestion }>();
+const props = defineProps<{ item: QuestionData }>();
 
 const menu = ref();
 const isLoading = ref(false);
@@ -34,7 +34,7 @@ const toggleActionMenu = (event) => {
 };
 
 const emit = defineEmits<{
-  onEditQuestion: [question: QuizQuestion];
+  onEditQuestion: [question: QuestionData];
 }>();
 </script>
 
