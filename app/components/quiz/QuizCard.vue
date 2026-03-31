@@ -75,9 +75,14 @@ const emit = defineEmits<{
           <Tag
             class="quiz-card__tags-item"
             severity="secondary"
-            :value="`Вопросов: ${item.total_questions}`"
+            :value="`Вопросов: ${item.questions.length}/${item.total_questions}`"
           ></Tag>
-          <Tag class="quiz-card__tags-item" :severity="status.severity" :value="status.value"></Tag>
+          <Tag
+            v-if="status"
+            class="quiz-card__tags-item"
+            :severity="status.severity"
+            :value="status.value"
+          ></Tag>
         </div>
 
         <span class="quiz-card__name">
