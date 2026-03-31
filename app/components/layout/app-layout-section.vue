@@ -48,6 +48,10 @@ const slots = useSlots();
     gap: 1rem;
     align-content: start;
     width: 100%;
+
+    @include mixins.screensTo("md") {
+      padding-bottom: var(--padding-card-md);
+    }
   }
 
   &__aside {
