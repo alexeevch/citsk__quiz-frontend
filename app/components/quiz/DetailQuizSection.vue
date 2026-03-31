@@ -4,6 +4,7 @@ import AppLayoutSection from "~/components/layout/app-layout-section.vue";
 
 const props = defineProps<{ quiz: QuizData | null; quizLoading?: boolean }>();
 
+const authStore = useAuthStore();
 const quizRef = toRef(props, "quiz");
 const { status } = useQuiz(quizRef);
 
@@ -35,11 +36,13 @@ const emit = defineEmits<{
               <h1 class="quiz-section__heading-title">
                 {{ quiz?.name }}
               </h1>
-              <Tag
-                v-if="status"
-                class="quiz-section__status"
-                :severity="status.severity"
-                :value="status.value"
+              <Button
+                class="quiz-section__heading-button"
+                label="Вопрос"
+                icon="pi pi-plus"
+                size="small"
+                fluid
+                :disabled="!authStore.can('api.add_question')"
               />
             </div>
             <div class="quiz-section__description">
@@ -50,10 +53,8 @@ const emit = defineEmits<{
             </div>
 
             <div class="quiz-section__questions">
-              <span class="quiz-section__questions--title"> Вопросы: </span>
-              <span class="quiz-section__questions-value">
-                {{ quiz?.questions }}
-              </span>
+              <div v-if="!props.quiz?.questions">Вопросов нет</div>
+              <QuizQuestionList v-else :items="props.quiz.questions" />
             </div>
           </div>
         </Transition>
@@ -67,6 +68,15 @@ const emit = defineEmits<{
             <Skeleton height="2rem" width="100%" />
             <Skeleton height="2rem" width="100%" />
           </div>
+
+          <div v-else class="quiz-section__aside-item">
+            <Tag
+              v-if="status"
+              class="quiz-section__status"
+              :severity="status.severity"
+              :value="status.value"
+            />
+          </div>
         </Transition>
       </div>
     </template>
@@ -74,6 +84,8 @@ const emit = defineEmits<{
 </template>
 
 <style scoped lang="scss">
+@use "~/assets/styles/common/mixins" as mixins;
+
 .quiz-section {
   &__skeletons,
   &__aside-skeletons {
@@ -94,15 +106,24 @@ const emit = defineEmits<{
     gap: 1rem;
     justify-content: space-between;
 
+    @include mixins.screensFrom("sm") {
+      flex-direction: column;
+    }
+
     &-title {
       margin: 0;
+    }
+
+    &-button {
+      width: fit-content;
+      height: fit-content;
     }
   }
 
   &__content {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: fluid(32, 16);
   }
 
   &__description {
@@ -115,7 +136,7 @@ const emit = defineEmits<{
     }
 
     &-value {
-      font-size: pxToRem(16);
+      @include mixins.fluid-text(16, 14);
     }
   }
 
@@ -142,6 +163,8 @@ const emit = defineEmits<{
   }
 
   &__aside {
+    position: sticky;
+    top: 0;
     display: flex;
     flex-direction: column;
     gap: 1rem;
