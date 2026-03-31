@@ -54,7 +54,7 @@ const emit = defineEmits<{
 
             <div class="quiz-section__questions">
               <div v-if="!props.quiz?.questions">Вопросов нет</div>
-              <QuizQuestionList v-else :items="props.quiz.questions" />
+              <QuestionList v-else :items="props.quiz.questions" />
             </div>
           </div>
         </Transition>

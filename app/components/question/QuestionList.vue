@@ -6,7 +6,7 @@ const props = defineProps<{ items: QuestionData[]; loading?: boolean }>();
 
 <template>
   <div class="question-list">
-    <QuizQuestionItem v-for="item in items" :key="item.id" :item class="question-list__item" />
+    <QuestionItem v-for="item in items" :key="item.id" :item class="question-list__item" />
   </div>
 </template>
 

@@ -84,7 +84,8 @@ const emit = defineEmits<{
 </template>
 
 <style scoped lang="scss">
-@use "~/assets/styles/common/mixins.scss" as mixins;
+@use "~/assets/styles/common/mixins" as mixins;
+
 .question {
   padding: var(--padding-card-sm);
   border-radius: var(--border-radius-primary);
