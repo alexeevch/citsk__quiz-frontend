@@ -1,5 +1,4 @@
 import type { OrganizationData } from "~/types/api/Organization";
-import type { AnswerWithCorrect } from "~/types/api/Answer";
 import type { QuestionData } from "~/types/api/Question";
 
 type BaseQuiz = {
@@ -9,11 +8,10 @@ type BaseQuiz = {
   is_active: boolean;
 };
 
-export type QuizQuestion = QuestionData & { answers: AnswerWithCorrect[] };
 export type QuizData = BaseQuiz & {
   id: number;
   organization: OrganizationData | null;
-  questions: QuizQuestion[];
+  questions: QuestionData[];
 };
 export type QuizCreateDTO = BaseQuiz & { organization_id: number };
 export type QuizUpdateDTO = Partial<QuizCreateDTO>;
