@@ -3,6 +3,8 @@ import { createFetchError } from "ofetch";
 import AuthRepository from "~/repositories/AuthRepository";
 import OrganizationRepository from "~/repositories/OrganizationRepository";
 import QuizRepository from "~/repositories/QuizRepository";
+import QuestionRepository from "~/repositories/QuestionRepository";
+import AnswerRepository from "~/repositories/AnswerRepository";
 
 export default defineNuxtPlugin(() => {
   const config = useRuntimeConfig();
@@ -55,7 +57,9 @@ export default defineNuxtPlugin(() => {
       repositories: {
         auth: new AuthRepository(apiFetcher),
         organization: new OrganizationRepository(apiFetcher),
-        quiz: new QuizRepository(apiFetcher)
+        quiz: new QuizRepository(apiFetcher),
+        question: new QuestionRepository(apiFetcher),
+        answer: new AnswerRepository(apiFetcher)
       }
     }
   };
