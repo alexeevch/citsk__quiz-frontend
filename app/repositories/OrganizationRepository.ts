@@ -13,7 +13,7 @@ class OrganizationRepository extends BaseRepository {
   }
 
   getById(id: number): Promise<OrganizationData> {
-    return this.call<OrganizationData>(this.resource + id);
+    return this.call<OrganizationData>(this.resource + id + "/");
   }
 
   create(dto: OrganizationCreateDTO): Promise<OrganizationData> {
@@ -24,7 +24,7 @@ class OrganizationRepository extends BaseRepository {
   }
 
   update(id: number, dto: OrganizationUpdateDTO): Promise<OrganizationData> {
-    return this.call<OrganizationData>(this.resource + id, {
+    return this.call<OrganizationData>(this.resource + id + "/", {
       method: "PATCH",
       body: dto
     });
