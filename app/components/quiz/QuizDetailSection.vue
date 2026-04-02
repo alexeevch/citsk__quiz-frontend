@@ -66,14 +66,11 @@ const emit = defineEmits<{
               <h1 class="quiz-section__heading-title">
                 {{ quiz?.name }}
               </h1>
-              <Button
-                class="quiz-section__heading-button"
-                label="Вопрос"
-                icon="pi pi-plus"
-                size="small"
-                fluid
-                :disabled="!authStore.can('api.add_question')"
-                @click="openCreateDrawer"
+              <Tag
+                v-if="status"
+                class="quiz-section__status"
+                :severity="status.severity"
+                :value="status.value"
               />
             </div>
             <div class="quiz-section__description">
@@ -105,23 +102,33 @@ const emit = defineEmits<{
     </template>
 
     <template #aside>
-      <div class="quiz-section__aside">
-        <Transition name="slide-up" mode="out-in">
-          <div v-if="props.quizLoading" key="loading" class="quiz-section__aside-skeletons">
-            <Skeleton height="2rem" width="100%" />
-            <Skeleton height="2rem" width="100%" />
-          </div>
+      <Transition name="slide-up" mode="out-in">
+        <div v-if="props.quizLoading" key="loading" class="quiz-section__aside-skeletons">
+          <Skeleton height="2rem" width="100%" />
+          <Skeleton height="2rem" width="100%" />
+        </div>
 
-          <div v-else class="quiz-section__aside-item">
+        <div v-else class="quiz-section__aside">
+          <div class="quiz-section__aside-item">
             <Tag
-              v-if="status"
-              class="quiz-section__status"
-              :severity="status.severity"
-              :value="status.value"
+              v-if="quiz"
+              :severity="quiz?.total_questions - quiz?.questions.length <= 0 ? 'success' : 'warn'"
+              :value="`Вопросов: ${quiz.questions.length}/${quiz?.total_questions}`"
             />
           </div>
-        </Transition>
-      </div>
+          <div class="quiz-section__aside-item">
+            <Button
+              class="quiz-section__add-btn"
+              label="Добавить вопрос"
+              icon="pi pi-plus"
+              size="small"
+              fluid
+              :disabled="!authStore.can('api.add_question')"
+              @click="openCreateDrawer"
+            />
+          </div>
+        </div>
+      </Transition>
     </template>
   </AppLayoutSection>
 </template>
@@ -144,6 +151,11 @@ const emit = defineEmits<{
     gap: 1rem;
   }
 
+  &__add-btn {
+    width: fit-content;
+    height: fit-content;
+  }
+
   &__heading {
     display: flex;
     gap: 1rem;
@@ -155,11 +167,6 @@ const emit = defineEmits<{
 
     &-title {
       margin: 0;
-    }
-
-    &-button {
-      width: fit-content;
-      height: fit-content;
     }
   }
 
@@ -212,6 +219,10 @@ const emit = defineEmits<{
     display: flex;
     flex-direction: column;
     gap: 1rem;
+
+    &-item {
+      width: 100%;
+    }
   }
 }
 </style>
