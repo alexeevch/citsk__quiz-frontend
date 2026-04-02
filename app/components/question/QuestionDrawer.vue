@@ -71,7 +71,9 @@ const validate = (): boolean => {
 };
 
 const addAnswer = () => {
-  answers.value.push({ text: "", correct: false, sort_index: "500" });
+  const maxSortIndex = answers.value.reduce((max, a) => Math.max(max, Number(a.sort_index)), 0);
+  const nextSortIndex = maxSortIndex + 10;
+  answers.value.push({ text: "", correct: false, sort_index: String(nextSortIndex) });
 };
 
 const removeAnswer = (index: number) => {
