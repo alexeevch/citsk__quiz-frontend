@@ -2,7 +2,7 @@ import { BaseRepository } from "./BaseRepository";
 import type { AnswerCreateDTO, AnswerData, AnswerUpdateDTO } from "~/types/api/Answer";
 
 class AnswerRepository extends BaseRepository {
-  private readonly resource = "/v1/admin/questions/";
+  private readonly resource = "/v1/admin/answers/";
 
   getAll(): Promise<AnswerData[]> {
     return this.call<AnswerData[]>(this.resource);
