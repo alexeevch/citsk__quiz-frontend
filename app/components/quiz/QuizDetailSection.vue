@@ -1,12 +1,42 @@
 <script setup lang="ts">
 import type { QuizData } from "~/types/api/Quiz";
 import AppLayoutSection from "~/components/layout/app-layout-section.vue";
+import type { QuestionData } from "~/types/api/Question";
 
 const props = defineProps<{ quiz: QuizData | null; quizLoading?: boolean }>();
 
 const authStore = useAuthStore();
+const questionStore = useQuestionStore();
+const { showError, showSuccess } = useAppToast();
+const { error: questionError } = storeToRefs(questionStore);
 const quizRef = toRef(props, "quiz");
 const { status } = useQuiz(quizRef);
+const drawerVisible = ref(false);
+const selectedQuestion = ref<QuestionData | null>(null);
+
+const openCreateDrawer = () => {
+  selectedQuestion.value = null;
+  drawerVisible.value = true;
+};
+
+const openEditDrawer = (question: QuestionData) => {
+  selectedQuestion.value = question;
+  drawerVisible.value = true;
+};
+
+const onQuestionSaved = () => {
+  emit("onQuizReload");
+};
+
+const deleteQuestion = async (id: number) => {
+  try {
+    await questionStore.deleteQuestion(id);
+    showSuccess("Хорошие новости", "Вопрос успешно удален");
+    emit("onQuizReload");
+  } catch {
+    showError("Не удалось удалить вопрос(", questionError.value ?? "Попытайтесь чуть позже");
+  }
+};
 
 const emit = defineEmits<{
   onQuizReload: [];
@@ -43,6 +73,7 @@ const emit = defineEmits<{
                 size="small"
                 fluid
                 :disabled="!authStore.can('api.add_question')"
+                @click="openCreateDrawer"
               />
             </div>
             <div class="quiz-section__description">
@@ -54,8 +85,20 @@ const emit = defineEmits<{
 
             <div class="quiz-section__questions">
               <div v-if="!props.quiz?.questions">Вопросов нет</div>
-              <QuestionList v-else :items="props.quiz.questions" />
+              <QuestionList
+                v-else
+                :items="props.quiz.questions"
+                @on-edit-question="openEditDrawer"
+                @on-delete-question="deleteQuestion"
+              />
             </div>
+
+            <LazyQuestionDrawer
+              v-model:visible="drawerVisible"
+              :quiz-id="quiz.id"
+              :question="selectedQuestion"
+              @saved="onQuestionSaved"
+            />
           </div>
         </Transition>
       </div>
@@ -136,6 +179,7 @@ const emit = defineEmits<{
     }
 
     &-value {
+      white-space: pre-line;
       @include mixins.fluid-text(16, 14);
     }
   }
