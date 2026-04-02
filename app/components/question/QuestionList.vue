@@ -1,12 +1,24 @@
 <script setup lang="ts">
 import type { QuestionData } from "~/types/api/Question";
 
-const props = defineProps<{ items: QuestionData[]; loading?: boolean }>();
+defineProps<{ items: QuestionData[]; loading?: boolean }>();
+
+const emit = defineEmits<{
+  onEditQuestion: [question: QuestionData];
+  onDeleteQuestion: [id: number];
+}>();
 </script>
 
 <template>
   <div class="question-list">
-    <QuestionItem v-for="item in items" :key="item.id" :item class="question-list__item" />
+    <QuestionItem
+      v-for="item in items"
+      :key="item.id"
+      :item
+      class="question-list__item"
+      @on-edit-question="emit('onEditQuestion', $event)"
+      @on-delete-question="emit('onDeleteQuestion', $event)"
+    />
   </div>
 </template>
 
