@@ -14,7 +14,7 @@ const quizStore = useQuizStore();
 const { error } = storeToRefs(quizStore);
 const { status } = useQuiz(ref(props.item));
 const { filters } = useQuizFilters();
-const { showError, showSuccess } = useAppToast();
+const { showError, showSuccess, showWarn } = useAppToast();
 
 const actionMenu = computed<LayoutMenuItem[]>(() => [
   {
@@ -30,6 +30,12 @@ const actionMenu = computed<LayoutMenuItem[]>(() => [
               await quizStore.hideQuiz(props.item.id);
               showSuccess("Удалось!", "Викторина скрыта от пользователей");
             } else {
+              const requiresQuestions = props.item.total_questions - props.item.questions.length;
+              if (requiresQuestions > 0) {
+                showWarn("Куда спешите?", `Необходимо добавить еще ${requiresQuestions} вопросов`);
+                return;
+              }
+
               await quizStore.showQuiz(props.item.id);
               showSuccess("Получилось!", "Викторина доступна пользователям");
             }
