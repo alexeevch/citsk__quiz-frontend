@@ -5,7 +5,6 @@ import type { QuestionData } from "~/types/api/Question";
 const props = defineProps<{ item: QuestionData }>();
 
 const menu = ref();
-const isLoading = ref(false);
 
 const actionMenu = computed<LayoutMenuItem[]>(() => [
   {
@@ -22,7 +21,7 @@ const actionMenu = computed<LayoutMenuItem[]>(() => [
         icon: "pi pi-trash",
         label: "Удалить",
         command() {
-          //
+          emit("onDeleteQuestion", props.item.id);
         }
       }
     ]
@@ -35,7 +34,10 @@ const toggleActionMenu = (event) => {
 
 const emit = defineEmits<{
   onEditQuestion: [question: QuestionData];
+  onDeleteQuestion: [id: number];
 }>();
+
+//TODO: feat: Обработать isLoading, чтобы кнопка меню становилась неактивной при удалении/обновлении
 </script>
 
 <template>
@@ -49,9 +51,8 @@ const emit = defineEmits<{
           severity="secondary"
           aria-haspopup="true"
           rounded
-          :icon="isLoading ? 'pi pi-spin pi-spinner' : 'pi pi-ellipsis-v'"
+          icon="pi pi-ellipsis-v"
           :aria-controls="`overlay_menu-${item.id}`"
-          :disabled="isLoading"
           @click="toggleActionMenu"
         />
       </div>
@@ -97,6 +98,7 @@ const emit = defineEmits<{
     gap: 1rem;
 
     &-name {
+      white-space: pre-line;
       @include mixins.fluid-text(16, 14);
     }
   }
