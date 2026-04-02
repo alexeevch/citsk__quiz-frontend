@@ -40,7 +40,11 @@ const onSubmit = async ({ values, valid }: FormSubmitEvent) => {
 
   try {
     if (isEdit.value && props.quiz) {
-      await quizStore.updateQuiz(props.quiz.id, values as QuizUpdateDTO);
+      const payload = {
+        ...values,
+        is_active: props.quiz?.is_active ?? false
+      };
+      await quizStore.updateQuiz(props.quiz.id, payload as QuizUpdateDTO);
       showSuccess("Викторина обновлена");
     } else {
       await quizStore.createQuiz(values as QuizCreateDTO);
