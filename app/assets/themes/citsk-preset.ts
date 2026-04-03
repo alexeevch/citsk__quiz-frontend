@@ -261,6 +261,15 @@ const AppPreset = definePreset(Aura, {
           }
         }
       }
+    },
+    popover: {
+      colorScheme: {
+        dark: {
+          background: "{surface.200}",
+          color: "{surface.600}",
+          borderColor: "{surface.300}"
+        }
+      }
     }
   }
 });
