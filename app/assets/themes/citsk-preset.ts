@@ -270,6 +270,31 @@ const AppPreset = definePreset(Aura, {
           borderColor: "{surface.300}"
         }
       }
+    },
+    togglebutton: {
+      colorScheme: {
+        dark: {
+          root: {
+            background: "{surface.200}",
+            color: "{surface.600}",
+            borderColor: "{surface.300}",
+            hoverBackground: "{surface.400}",
+            hoverColor: "{surface.800}",
+
+            checked: {
+              background: "{surface.200}",
+              color: "{surface.800}",
+              borderColor: "{surface.300}"
+            },
+
+            content: {
+              checked: {
+                background: "{surface.400}"
+              }
+            }
+          }
+        }
+      }
     }
   }
 });
