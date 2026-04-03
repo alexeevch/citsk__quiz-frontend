@@ -1,13 +1,14 @@
 import { defineStore } from "pinia";
 import { useStoreRequest } from "~/composables/useStoreRequest";
 import type { QuizCreateDTO, QuizData, QuizQueryParams, QuizUpdateDTO } from "~/types/api/Quiz";
+import type { ApiResponseCollection } from "~/types/api/Common";
 
 export const useQuizStore = defineStore("quiz", () => {
   const { $repositories } = useNuxtApp();
   const authStore = useAuthStore();
   const { error, isLoading, load } = useStoreRequest();
 
-  const quizList = ref<QuizData[]>([]);
+  const quizList = ref<ApiResponseCollection<QuizData> | null>(null);
 
   const fetchQuizzes = async (query?: QuizQueryParams) => {
     if (!authStore.can("api.view_quiz")) {
@@ -16,7 +17,9 @@ export const useQuizStore = defineStore("quiz", () => {
       throw new Error(message);
     }
 
-    const response = await load<QuizData[]>(() => $repositories.quiz.getAll(query));
+    const response = await load<ApiResponseCollection<QuizData>>(() =>
+      $repositories.quiz.getAll(query)
+    );
     quizList.value = response;
     return response;
   };

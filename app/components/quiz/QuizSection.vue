@@ -57,7 +57,7 @@ watch(
 
     <QuizList
       class="quiz-section__content"
-      :items="quizzes"
+      :items="quizzes?.items || []"
       :loading="isLoading"
       @on-edit-quiz="openEdit"
     />

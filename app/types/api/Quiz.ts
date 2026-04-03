@@ -1,5 +1,6 @@
 import type { OrganizationData } from "~/types/api/Organization";
 import type { QuestionData } from "~/types/api/Question";
+import type { ApiQueryOrder } from "~/types/api/Common";
 
 type BaseQuiz = {
   name: string;
@@ -19,4 +20,10 @@ export type QuizUpdateDTO = Partial<QuizCreateDTO>;
 export type QuizQueryParams = {
   is_active?: boolean;
   organization?: number;
+  order?: QuizQueryOrder;
 };
+
+export type QuizQueryOrder =
+  | ApiQueryOrder<"organization">
+  | ApiQueryOrder<"name">
+  | ApiQueryOrder<"id">;

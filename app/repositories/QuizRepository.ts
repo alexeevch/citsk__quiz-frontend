@@ -1,11 +1,12 @@
 import { BaseRepository } from "./BaseRepository";
 import type { QuizCreateDTO, QuizData, QuizQueryParams, QuizUpdateDTO } from "~/types/api/Quiz";
+import type { ApiResponseCollection } from "~/types/api/Common";
 
 class QuizRepository extends BaseRepository {
   private readonly resource = "/v1/admin/quizzes/";
 
-  getAll(query?: QuizQueryParams): Promise<QuizData[]> {
-    return this.call<QuizData[]>(this.resource, {
+  getAll(query?: QuizQueryParams): Promise<ApiResponseCollection<QuizData>> {
+    return this.call<ApiResponseCollection<QuizData>>(this.resource, {
       query
     });
   }
