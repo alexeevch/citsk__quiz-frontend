@@ -2,6 +2,11 @@ type QueryPrimitive = string | number | boolean | null | undefined;
 
 type QueryParams = Record<string, QueryPrimitive | QueryPrimitive[]>;
 
+function serializePrimitive(value: QueryPrimitive): string | null {
+  if (value === null || value === undefined) return null;
+  return String(value);
+}
+
 export function serializeQuery(
   params: QueryParams
 ): Record<string, string | null | undefined | (string | null)[]> {
@@ -17,11 +22,6 @@ export function serializeQuery(
       return [key, serializePrimitive(value)];
     })
   );
-}
-
-function serializePrimitive(value: QueryPrimitive): string | null {
-  if (value === null || value === undefined) return null;
-  return String(value);
 }
 
 export function deserializeParam<T extends QueryPrimitive>(

@@ -5,14 +5,10 @@ const props = defineProps<{
   modelValue: QuizQueryParams;
 }>();
 
-const emit = defineEmits<{
-  "update:modelValue": [v: QuizQueryParams];
-}>();
-
 const organizationStore = useOrganizationStore();
 const { organizations, isLoading: orgLoading } = storeToRefs(organizationStore);
 const { isAdmin } = storeToRefs(useAuthStore());
-
+const { activityFilters } = useQuizFilters();
 await useAsyncData(
   "organizations",
   async () => {
@@ -21,6 +17,10 @@ await useAsyncData(
   },
   { lazy: true }
 );
+
+const emit = defineEmits<{
+  "update:modelValue": [v: QuizQueryParams];
+}>();
 </script>
 
 <template>
@@ -43,6 +43,20 @@ await useAsyncData(
           :disabled="!isAdmin"
           :options="organizations ?? []"
           @update:model-value="emit('update:modelValue', { ...modelValue, organization: $event })"
+        />
+      </div>
+
+      <div class="quiz-filter__item">
+        <SelectButton
+          :model-value="modelValue.is_active"
+          size="small"
+          option-label="label"
+          option-value="value"
+          :options="activityFilters"
+          fluid
+          @update:model-value="
+            emit('update:modelValue', { ...modelValue, is_active: $event ?? undefined })
+          "
         />
       </div>
     </div>
