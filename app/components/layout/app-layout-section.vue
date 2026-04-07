@@ -23,6 +23,7 @@ const slots = useSlots();
 @use "~/assets/styles/common/mixins.scss" as mixins;
 
 .layout-section {
+  position: relative;
   display: flex;
   flex-direction: column;
   max-height: calc(100% - (2 * var(--padding-card-md)));
@@ -59,11 +60,11 @@ const slots = useSlots();
   }
 
   &__footer {
-    position: fixed;
+    position: sticky;
     width: 100%;
-    bottom: var(--padding-layout-md);
+    bottom: calc(var(--padding-layout-md) * -1);
     background-color: var(--color-bg-card);
-    padding: var(--padding-card-sm) 0;
+    padding: 0.5rem 0;
   }
 }
 </style>
