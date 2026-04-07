@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { QuizQueryParams } from "~/types/api/Quiz";
 
-const props = defineProps<{
+defineProps<{
   modelValue: QuizQueryParams;
 }>();
 
@@ -67,7 +67,7 @@ const emit = defineEmits<{
 .quiz-filter {
   position: relative;
   overflow: hidden;
-  box-shadow: var(--shadow-card);
+  border: 4px solid var(--color-bg-border);
   border-radius: var(--border-radius-primary);
   background-color: var(--color-bg-border);
 
