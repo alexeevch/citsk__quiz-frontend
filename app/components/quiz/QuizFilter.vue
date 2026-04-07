@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import type { QuizQueryParams } from "~/types/api/Quiz";
+import type { QuizQueryFilter } from "~/types/api/Quiz";
 
 defineProps<{
-  modelValue: QuizQueryParams;
+  modelValue: QuizQueryFilter;
 }>();
 
 const organizationStore = useOrganizationStore();
@@ -19,7 +19,7 @@ await useAsyncData(
 );
 
 const emit = defineEmits<{
-  "update:modelValue": [v: QuizQueryParams];
+  "update:modelValue": [v: QuizQueryFilter];
 }>();
 </script>
 
