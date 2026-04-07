@@ -1,6 +1,6 @@
 import type { OrganizationData } from "~/types/api/Organization";
 import type { QuestionData } from "~/types/api/Question";
-import type { ApiQueryOrder } from "~/types/api/Common";
+import type { ApiQueryOrder, ApiQueryPaginator } from "~/types/api/Common";
 
 type BaseQuiz = {
   name: string;
@@ -17,7 +17,9 @@ export type QuizData = BaseQuiz & {
 export type QuizCreateDTO = BaseQuiz & { organization_id: number };
 export type QuizUpdateDTO = Partial<QuizCreateDTO>;
 
-export type QuizQueryParams = {
+export type QuizQueryParams = QuizQueryFilter & ApiQueryPaginator;
+
+export type QuizQueryFilter = {
   is_active?: boolean;
   organization?: number;
   order?: QuizQueryOrder;
