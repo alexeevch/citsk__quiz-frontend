@@ -15,4 +15,9 @@ export type ApiPaginator = {
   prev_page_url: string | null;
 };
 
+export type ApiQueryPaginator = {
+  limit?: number;
+  page?: number;
+};
+
 export type ApiQueryOrder<T extends string> = T | `-${T}`;
