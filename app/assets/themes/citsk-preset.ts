@@ -295,6 +295,11 @@ const AppPreset = definePreset(Aura, {
           }
         }
       }
+    },
+    paginator: {
+      root: {
+        background: "inherit"
+      }
     }
   }
 });
